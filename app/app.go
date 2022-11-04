@@ -143,6 +143,10 @@ import (
 	"github.com/evmos/evmos/v9/x/vesting"
 	vestingkeeper "github.com/evmos/evmos/v9/x/vesting/keeper"
 	vestingtypes "github.com/evmos/evmos/v9/x/vesting/types"
+
+	feedistmodule "github.com/evmos/evmos/v9/x/feedist"
+	feedistmodulekeeper "github.com/evmos/evmos/v9/x/feedist/keeper"
+	feedistmoduletypes "github.com/evmos/evmos/v9/x/feedist/types"
 )
 
 func init() {
@@ -203,6 +207,7 @@ var (
 		claims.AppModuleBasic{},
 		recovery.AppModuleBasic{},
 		revenue.AppModuleBasic{},
+		feedistmodule.AppModuleBasic{},
 	)
 
 	// module account permissions
@@ -218,6 +223,7 @@ var (
 		erc20types.ModuleName:          {authtypes.Minter, authtypes.Burner},
 		claimstypes.ModuleName:         nil,
 		incentivestypes.ModuleName:     {authtypes.Minter, authtypes.Burner},
+		feedistmoduletypes.ModuleName:  {authtypes.Minter, authtypes.Burner, authtypes.Staking},
 	}
 
 	// module accounts that are allowed to receive tokens
@@ -286,6 +292,8 @@ type Evmos struct {
 	RecoveryKeeper   *recoverykeeper.Keeper
 	RevenueKeeper    revenuekeeper.Keeper
 
+	FeedistKeeper feedistmodulekeeper.Keeper
+
 	// the module manager
 	mm *module.Manager
 
@@ -342,6 +350,7 @@ func NewEvmos(
 		inflationtypes.StoreKey, erc20types.StoreKey, incentivestypes.StoreKey,
 		epochstypes.StoreKey, claimstypes.StoreKey, vestingtypes.StoreKey,
 		revenuetypes.StoreKey,
+		feedistmoduletypes.StoreKey,
 	)
 
 	// Add the EVM transient store key
@@ -561,6 +570,16 @@ func NewEvmos(
 	// we prefer to be more strict in what arguments the modules expect.
 	skipGenesisInvariants := cast.ToBool(appOpts.Get(crisis.FlagSkipGenesisInvariants))
 
+	app.FeedistKeeper = *feedistmodulekeeper.NewKeeper(
+		appCodec,
+		keys[feedistmoduletypes.StoreKey],
+		keys[feedistmoduletypes.MemStoreKey],
+		app.GetSubspace(feedistmoduletypes.ModuleName),
+
+		app.BankKeeper,
+	)
+	feedistModule := feedistmodule.NewAppModule(appCodec, app.FeedistKeeper, app.AccountKeeper, app.BankKeeper)
+
 	// NOTE: Any module instantiated in the module manager that is later modified
 	// must be passed by reference here.
 	app.mm = module.NewManager(
@@ -598,6 +617,7 @@ func NewEvmos(
 		vesting.NewAppModule(app.VestingKeeper, app.AccountKeeper, app.BankKeeper, app.StakingKeeper),
 		recovery.NewAppModule(*app.RecoveryKeeper),
 		revenue.NewAppModule(app.RevenueKeeper, app.AccountKeeper),
+		feedistModule,
 	)
 
 	// During begin block slashing happens after distr.BeginBlocker so that
@@ -635,6 +655,7 @@ func NewEvmos(
 		incentivestypes.ModuleName,
 		recoverytypes.ModuleName,
 		revenuetypes.ModuleName,
+		feedistmoduletypes.ModuleName,
 	)
 
 	// NOTE: fee market module must go last in order to retrieve the block gas used.
@@ -668,6 +689,7 @@ func NewEvmos(
 		incentivestypes.ModuleName,
 		recoverytypes.ModuleName,
 		revenuetypes.ModuleName,
+		feedistmoduletypes.ModuleName,
 	)
 
 	// NOTE: The genutils module must occur after staking so that pools are
@@ -710,6 +732,7 @@ func NewEvmos(
 		revenuetypes.ModuleName,
 		// NOTE: crisis module must go at the end to check for invariants on each module
 		crisistypes.ModuleName,
+		feedistmoduletypes.ModuleName,
 	)
 
 	app.mm.RegisterInvariants(&app.CrisisKeeper)
@@ -742,6 +765,7 @@ func NewEvmos(
 		evm.NewAppModule(app.EvmKeeper, app.AccountKeeper),
 		epochs.NewAppModule(appCodec, app.EpochsKeeper),
 		feemarket.NewAppModule(app.FeeMarketKeeper),
+		feedistModule,
 	)
 
 	app.sm.RegisterStoreDecoders()
@@ -1028,6 +1052,8 @@ func initParamsKeeper(
 	paramsKeeper.Subspace(incentivestypes.ModuleName)
 	paramsKeeper.Subspace(recoverytypes.ModuleName)
 	paramsKeeper.Subspace(revenuetypes.ModuleName)
+	paramsKeeper.Subspace(feedistmoduletypes.ModuleName)
+
 	return paramsKeeper
 }
 
