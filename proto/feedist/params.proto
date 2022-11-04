@@ -1,0 +1,13 @@
+syntax = "proto3";
+package evmos.v9.feedist;
+
+import "gogoproto/gogo.proto";
+
+option go_package = "github.com/evmos/evmos/v9/x/feedist/types";
+
+// Params defines the parameters for the module.
+message Params {
+  option (gogoproto.goproto_stringer) = false;
+  
+  bool enableFeedist = 1 [(gogoproto.moretags) = "yaml:\"enable_feedist\""];
+}
