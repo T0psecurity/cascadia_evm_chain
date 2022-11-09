@@ -7,7 +7,17 @@ option go_package = "github.com/evmos/evmos/v9/x/feedist/types";
 
 // Msg defines the Msg service.
 service Msg {
-    // this line is used by starport scaffolding # proto/tx/rpc
+      rpc RegisterFeedist(MsgRegisterFeedist) returns (MsgRegisterFeedistResponse);
+// this line is used by starport scaffolding # proto/tx/rpc
+}
+
+message MsgRegisterFeedist {
+  string creator = 1;
+  string contract = 2;
+  string shares = 3;
+}
+
+message MsgRegisterFeedistResponse {
 }
 
 // this line is used by starport scaffolding # proto/tx/message
