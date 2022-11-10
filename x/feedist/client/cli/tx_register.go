@@ -6,6 +6,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/client/tx"
+	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/evmos/evmos/v9/x/feedist/types"
 	"github.com/spf13/cobra"
 )
@@ -14,8 +15,8 @@ var _ = strconv.Itoa(0)
 
 func CmdRegisterFeedist() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "register-feedist [contract] [shares]",
-		Short: "Broadcast message register-feedist",
+		Use:   "register [contract] [shares]",
+		Short: "Broadcast message register",
 		Args:  cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			argContract := args[0]
@@ -26,10 +27,15 @@ func CmdRegisterFeedist() *cobra.Command {
 				return err
 			}
 
+			shares, err := sdk.NewDecFromStr(argShares)
+			if err != nil {
+				return err
+			}
+
 			msg := types.NewMsgRegisterFeedist(
 				clientCtx.GetFromAddress().String(),
 				argContract,
-				argShares,
+				shares,
 			)
 			if err := msg.ValidateBasic(); err != nil {
 				return err

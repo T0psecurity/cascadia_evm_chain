@@ -2,6 +2,7 @@ syntax = "proto3";
 package evmos.v9.feedist;
 
 // this line is used by starport scaffolding # proto/tx/import
+import "gogoproto/gogo.proto";
 
 option go_package = "github.com/evmos/evmos/v9/x/feedist/types";
 
@@ -14,7 +15,10 @@ service Msg {
 message MsgRegisterFeedist {
   string creator = 1;
   string contract = 2;
-  string shares = 3;
+  string shares = 3 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
 }
 
 message MsgRegisterFeedistResponse {

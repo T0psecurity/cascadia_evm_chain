@@ -577,6 +577,8 @@ func NewEvmos(
 		app.GetSubspace(feedistmoduletypes.ModuleName),
 
 		app.BankKeeper,
+		app.EvmKeeper,
+		authtypes.FeeCollectorName,
 	)
 	feedistModule := feedistmodule.NewAppModule(appCodec, app.FeedistKeeper, app.AccountKeeper, app.BankKeeper)
 

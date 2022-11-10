@@ -22,7 +22,7 @@ var (
 )
 
 const (
-	opWeightMsgRegisterFeedist = "op_weight_msg_register_feedist"
+	opWeightMsgRegisterFeedist = "op_weight_msg_register"
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgRegisterFeedist int = 100
 
