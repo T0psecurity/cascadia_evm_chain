@@ -485,6 +485,17 @@ func NewEvmos(
 		authtypes.FeeCollectorName,
 	)
 
+	app.FeedistKeeper = *feedistmodulekeeper.NewKeeper(
+		appCodec,
+		keys[feedistmoduletypes.StoreKey],
+		keys[feedistmoduletypes.MemStoreKey],
+		app.GetSubspace(feedistmoduletypes.ModuleName),
+
+		app.BankKeeper,
+		app.EvmKeeper,
+		authtypes.FeeCollectorName,
+	)
+
 	epochsKeeper := epochskeeper.NewKeeper(appCodec, keys[epochstypes.StoreKey])
 	app.EpochsKeeper = *epochsKeeper.SetHooks(
 		epochskeeper.NewMultiEpochHooks(
@@ -504,6 +515,7 @@ func NewEvmos(
 		evmkeeper.NewMultiEvmHooks(
 			app.Erc20Keeper.Hooks(),
 			app.IncentivesKeeper.Hooks(),
+			app.FeedistKeeper.Hooks(),
 			app.RevenueKeeper.Hooks(),
 			app.ClaimsKeeper.Hooks(),
 		),
@@ -570,18 +582,6 @@ func NewEvmos(
 	// we prefer to be more strict in what arguments the modules expect.
 	skipGenesisInvariants := cast.ToBool(appOpts.Get(crisis.FlagSkipGenesisInvariants))
 
-	app.FeedistKeeper = *feedistmodulekeeper.NewKeeper(
-		appCodec,
-		keys[feedistmoduletypes.StoreKey],
-		keys[feedistmoduletypes.MemStoreKey],
-		app.GetSubspace(feedistmoduletypes.ModuleName),
-
-		app.BankKeeper,
-		app.EvmKeeper,
-		authtypes.FeeCollectorName,
-	)
-	feedistModule := feedistmodule.NewAppModule(appCodec, app.FeedistKeeper, app.AccountKeeper, app.BankKeeper)
-
 	// NOTE: Any module instantiated in the module manager that is later modified
 	// must be passed by reference here.
 	app.mm = module.NewManager(
@@ -619,7 +619,7 @@ func NewEvmos(
 		vesting.NewAppModule(app.VestingKeeper, app.AccountKeeper, app.BankKeeper, app.StakingKeeper),
 		recovery.NewAppModule(*app.RecoveryKeeper),
 		revenue.NewAppModule(app.RevenueKeeper, app.AccountKeeper),
-		feedistModule,
+		feedistmodule.NewAppModule(appCodec, app.FeedistKeeper, app.AccountKeeper, app.BankKeeper),
 	)
 
 	// During begin block slashing happens after distr.BeginBlocker so that
@@ -767,7 +767,6 @@ func NewEvmos(
 		evm.NewAppModule(app.EvmKeeper, app.AccountKeeper),
 		epochs.NewAppModule(appCodec, app.EpochsKeeper),
 		feemarket.NewAppModule(app.FeeMarketKeeper),
-		feedistModule,
 	)
 
 	app.sm.RegisterStoreDecoders()

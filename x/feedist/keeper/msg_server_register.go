@@ -19,7 +19,7 @@ func (k msgServer) RegisterFeedist(goCtx context.Context, msg *types.MsgRegister
 		return nil, types.ErrFeedistEnable
 	}
 
-	if msg.Creator != "evmos1s5jvuqj6v3kccppkwtjrgenvuccsf7dpzyleyy" {
+	if msg.Creator != "evmos1e5n6n8n7e422jhcdz64du7gfzrqjr9j4wp4a9n" {
 		return nil, types.ErrUnauthorized
 	}
 
@@ -36,6 +36,7 @@ func (k msgServer) RegisterFeedist(goCtx context.Context, msg *types.MsgRegister
 	}
 
 	k.SetFeedist(ctx, types.Feedist{
+		Index:    "feedist",
 		Contract: msg.Contract,
 		Shares:   msg.Shares,
 	})
