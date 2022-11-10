@@ -2,12 +2,26 @@ syntax = "proto3";
 package evmos.v9.feedist;
 
 // this line is used by starport scaffolding # proto/tx/import
+import "gogoproto/gogo.proto";
 
 option go_package = "github.com/evmos/evmos/v9/x/feedist/types";
 
 // Msg defines the Msg service.
 service Msg {
-    // this line is used by starport scaffolding # proto/tx/rpc
+      rpc RegisterFeedist(MsgRegisterFeedist) returns (MsgRegisterFeedistResponse);
+// this line is used by starport scaffolding # proto/tx/rpc
+}
+
+message MsgRegisterFeedist {
+  string creator = 1;
+  string contract = 2;
+  string shares = 3 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+}
+
+message MsgRegisterFeedistResponse {
 }
 
 // this line is used by starport scaffolding # proto/tx/message

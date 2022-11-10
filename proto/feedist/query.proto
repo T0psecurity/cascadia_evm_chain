@@ -5,6 +5,7 @@ import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "feedist/params.proto";
+import "feedist/feedist.proto";
 // this line is used by starport scaffolding # 1
 
 option go_package = "github.com/evmos/evmos/v9/x/feedist/types";
@@ -15,7 +16,17 @@ service Query {
   rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
     option (google.api.http).get = "/evmos/v9/feedist/params";
   }
-  // this line is used by starport scaffolding # 2
+  // Queries a Feedist by index.
+	rpc Feedist(QueryGetFeedistRequest) returns (QueryGetFeedistResponse) {
+		option (google.api.http).get = "/evmos/v9/feedist/feedist/{index}";
+	}
+
+	// Queries a list of Feedist items.
+	rpc FeedistAll(QueryAllFeedistRequest) returns (QueryAllFeedistResponse) {
+		option (google.api.http).get = "/evmos/v9/feedist/feedist";
+	}
+
+// this line is used by starport scaffolding # 2
 }
 
 // QueryParamsRequest is request type for the Query/Params RPC method.
@@ -25,6 +36,24 @@ message QueryParamsRequest {}
 message QueryParamsResponse {
   // params holds all the parameters of this module.
   Params params = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryGetFeedistRequest {
+	  string index = 1;
+
+}
+
+message QueryGetFeedistResponse {
+	Feedist feedist = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllFeedistRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllFeedistResponse {
+	repeated Feedist feedist = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 
 // this line is used by starport scaffolding # 3

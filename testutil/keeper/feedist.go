@@ -3,12 +3,9 @@ package keeper
 import (
 	"testing"
 
-	"github.com/cosmos/cosmos-sdk/codec"
-	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	"github.com/cosmos/cosmos-sdk/store"
 	storetypes "github.com/cosmos/cosmos-sdk/store/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	typesparams "github.com/cosmos/cosmos-sdk/x/params/types"
 	"github.com/evmos/evmos/v9/x/feedist/keeper"
 	"github.com/evmos/evmos/v9/x/feedist/types"
 	"github.com/stretchr/testify/require"
@@ -27,27 +24,27 @@ func FeedistKeeper(t testing.TB) (*keeper.Keeper, sdk.Context) {
 	stateStore.MountStoreWithDB(memStoreKey, sdk.StoreTypeMemory, nil)
 	require.NoError(t, stateStore.LoadLatestVersion())
 
-	registry := codectypes.NewInterfaceRegistry()
-	cdc := codec.NewProtoCodec(registry)
+	// registry := codectypes.NewInterfaceRegistry()
+	// cdc := codec.NewProtoCodec(registry)
 
-	paramsSubspace := typesparams.NewSubspace(cdc,
-		types.Amino,
-		storeKey,
-		memStoreKey,
-		"FeedistParams",
-	)
-	k := keeper.NewKeeper(
-		cdc,
-		storeKey,
-		memStoreKey,
-		paramsSubspace,
-		nil,
-	)
+	// paramsSubspace := typesparams.NewSubspace(cdc,
+	// 	types.Amino,
+	// 	storeKey,
+	// 	memStoreKey,
+	// 	"FeedistParams",
+	// )
+	// k := keeper.NewKeeper(
+	// 	cdc,
+	// 	storeKey,
+	// 	memStoreKey,
+	// 	paramsSubspace,
+	// 	nil,
+	// )
 
 	ctx := sdk.NewContext(stateStore, tmproto.Header{}, false, log.NewNopLogger())
 
 	// Initialize params
-	k.SetParams(ctx, types.DefaultParams())
+	// k.SetParams(ctx, types.DefaultParams())
 
-	return k, ctx
+	return nil, ctx
 }
