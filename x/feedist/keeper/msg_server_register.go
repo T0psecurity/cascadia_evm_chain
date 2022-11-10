@@ -5,6 +5,7 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
+	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/evmos/evmos/v9/x/feedist/types"
 )
@@ -27,12 +28,17 @@ func (k msgServer) RegisterFeedist(goCtx context.Context, msg *types.MsgRegister
 	// contract must already be deployed, to avoid spam registrations
 	contractAccount := k.evmKeeper.GetAccountWithoutBalance(ctx, contract)
 
-	// if contractAccount == nil || !contractAccount.IsContract() {
-	// 	return nil, sdkerrors.Wrapf(
-	// 		types.ErrRevenueNoContractDeployed,
-	// 		"no contract code found at address %s", msg.Contract,
-	// 	)
-	// }
+	if contractAccount == nil || !contractAccount.IsContract() {
+		return nil, sdkerrors.Wrapf(
+			types.ErrRevenueNoContractDeployed,
+			"no contract code found at address %s", msg.Contract,
+		)
+	}
+
+	k.SetFeedist(ctx, types.Feedist{
+		Contract: msg.Contract,
+		Shares:   msg.Shares,
+	})
 
 	return &types.MsgRegisterFeedistResponse{}, nil
 }

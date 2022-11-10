@@ -13,6 +13,14 @@ func TestGenesis(t *testing.T) {
 	genesisState := types.GenesisState{
 		Params: types.DefaultParams(),
 
+		FeedistList: []types.Feedist{
+			{
+				Index: "0",
+			},
+			{
+				Index: "1",
+			},
+		},
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -21,5 +29,6 @@ func TestGenesis(t *testing.T) {
 	got := feedist.ExportGenesis(ctx, *k)
 	require.NotNil(t, got)
 
+	require.ElementsMatch(t, genesisState.FeedistList, got.FeedistList)
 	// this line is used by starport scaffolding # genesis/test/assert
 }

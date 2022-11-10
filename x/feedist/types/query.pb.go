@@ -6,7 +6,7 @@ package types
 import (
 	context "context"
 	fmt "fmt"
-	_ "github.com/cosmos/cosmos-sdk/types/query"
+	query "github.com/cosmos/cosmos-sdk/types/query"
 	_ "github.com/gogo/protobuf/gogoproto"
 	grpc1 "github.com/gogo/protobuf/grpc"
 	proto "github.com/gogo/protobuf/proto"
@@ -113,34 +113,234 @@ func (m *QueryParamsResponse) GetParams() Params {
 	return Params{}
 }
 
+type QueryGetFeedistRequest struct {
+	Index string `protobuf:"bytes,1,opt,name=index,proto3" json:"index,omitempty"`
+}
+
+func (m *QueryGetFeedistRequest) Reset()         { *m = QueryGetFeedistRequest{} }
+func (m *QueryGetFeedistRequest) String() string { return proto.CompactTextString(m) }
+func (*QueryGetFeedistRequest) ProtoMessage()    {}
+func (*QueryGetFeedistRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_85749ae7e5cdb3e9, []int{2}
+}
+func (m *QueryGetFeedistRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryGetFeedistRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryGetFeedistRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryGetFeedistRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryGetFeedistRequest.Merge(m, src)
+}
+func (m *QueryGetFeedistRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryGetFeedistRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryGetFeedistRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryGetFeedistRequest proto.InternalMessageInfo
+
+func (m *QueryGetFeedistRequest) GetIndex() string {
+	if m != nil {
+		return m.Index
+	}
+	return ""
+}
+
+type QueryGetFeedistResponse struct {
+	Feedist Feedist `protobuf:"bytes,1,opt,name=feedist,proto3" json:"feedist"`
+}
+
+func (m *QueryGetFeedistResponse) Reset()         { *m = QueryGetFeedistResponse{} }
+func (m *QueryGetFeedistResponse) String() string { return proto.CompactTextString(m) }
+func (*QueryGetFeedistResponse) ProtoMessage()    {}
+func (*QueryGetFeedistResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_85749ae7e5cdb3e9, []int{3}
+}
+func (m *QueryGetFeedistResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryGetFeedistResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryGetFeedistResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryGetFeedistResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryGetFeedistResponse.Merge(m, src)
+}
+func (m *QueryGetFeedistResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryGetFeedistResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryGetFeedistResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryGetFeedistResponse proto.InternalMessageInfo
+
+func (m *QueryGetFeedistResponse) GetFeedist() Feedist {
+	if m != nil {
+		return m.Feedist
+	}
+	return Feedist{}
+}
+
+type QueryAllFeedistRequest struct {
+	Pagination *query.PageRequest `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
+}
+
+func (m *QueryAllFeedistRequest) Reset()         { *m = QueryAllFeedistRequest{} }
+func (m *QueryAllFeedistRequest) String() string { return proto.CompactTextString(m) }
+func (*QueryAllFeedistRequest) ProtoMessage()    {}
+func (*QueryAllFeedistRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_85749ae7e5cdb3e9, []int{4}
+}
+func (m *QueryAllFeedistRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryAllFeedistRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryAllFeedistRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryAllFeedistRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryAllFeedistRequest.Merge(m, src)
+}
+func (m *QueryAllFeedistRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryAllFeedistRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryAllFeedistRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryAllFeedistRequest proto.InternalMessageInfo
+
+func (m *QueryAllFeedistRequest) GetPagination() *query.PageRequest {
+	if m != nil {
+		return m.Pagination
+	}
+	return nil
+}
+
+type QueryAllFeedistResponse struct {
+	Feedist    []Feedist           `protobuf:"bytes,1,rep,name=feedist,proto3" json:"feedist"`
+	Pagination *query.PageResponse `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
+}
+
+func (m *QueryAllFeedistResponse) Reset()         { *m = QueryAllFeedistResponse{} }
+func (m *QueryAllFeedistResponse) String() string { return proto.CompactTextString(m) }
+func (*QueryAllFeedistResponse) ProtoMessage()    {}
+func (*QueryAllFeedistResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_85749ae7e5cdb3e9, []int{5}
+}
+func (m *QueryAllFeedistResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryAllFeedistResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryAllFeedistResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryAllFeedistResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryAllFeedistResponse.Merge(m, src)
+}
+func (m *QueryAllFeedistResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryAllFeedistResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryAllFeedistResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryAllFeedistResponse proto.InternalMessageInfo
+
+func (m *QueryAllFeedistResponse) GetFeedist() []Feedist {
+	if m != nil {
+		return m.Feedist
+	}
+	return nil
+}
+
+func (m *QueryAllFeedistResponse) GetPagination() *query.PageResponse {
+	if m != nil {
+		return m.Pagination
+	}
+	return nil
+}
+
 func init() {
 	proto.RegisterType((*QueryParamsRequest)(nil), "evmos.v9.feedist.QueryParamsRequest")
 	proto.RegisterType((*QueryParamsResponse)(nil), "evmos.v9.feedist.QueryParamsResponse")
+	proto.RegisterType((*QueryGetFeedistRequest)(nil), "evmos.v9.feedist.QueryGetFeedistRequest")
+	proto.RegisterType((*QueryGetFeedistResponse)(nil), "evmos.v9.feedist.QueryGetFeedistResponse")
+	proto.RegisterType((*QueryAllFeedistRequest)(nil), "evmos.v9.feedist.QueryAllFeedistRequest")
+	proto.RegisterType((*QueryAllFeedistResponse)(nil), "evmos.v9.feedist.QueryAllFeedistResponse")
 }
 
 func init() { proto.RegisterFile("feedist/query.proto", fileDescriptor_85749ae7e5cdb3e9) }
 
 var fileDescriptor_85749ae7e5cdb3e9 = []byte{
-	// 298 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x90, 0x31, 0x4b, 0x03, 0x31,
-	0x14, 0xc7, 0x2f, 0xa2, 0x1d, 0xe2, 0x22, 0x69, 0x87, 0x72, 0x48, 0x2c, 0x45, 0x41, 0x1d, 0x12,
-	0x5a, 0x41, 0xe8, 0x5a, 0x67, 0x41, 0x3b, 0xba, 0xe5, 0x6a, 0x8c, 0x07, 0xde, 0xbd, 0xb4, 0xc9,
-	0x9d, 0x76, 0x13, 0x3f, 0x81, 0xe0, 0x97, 0xea, 0x58, 0x70, 0x71, 0x12, 0xb9, 0xf3, 0x83, 0x48,
-	0x93, 0x58, 0xa8, 0x1d, 0xdc, 0xc2, 0x7b, 0xbf, 0xff, 0x8f, 0xff, 0x0b, 0x6e, 0xde, 0x49, 0x79,
-	0x9b, 0x1a, 0xcb, 0x27, 0x85, 0x9c, 0xce, 0x98, 0x9e, 0x82, 0x05, 0xb2, 0x27, 0xcb, 0x0c, 0x0c,
-	0x2b, 0x07, 0x2c, 0x6c, 0xe3, 0x96, 0x02, 0x05, 0x6e, 0xc9, 0x97, 0x2f, 0xcf, 0xc5, 0xfb, 0x0a,
-	0x40, 0x3d, 0x48, 0x2e, 0x74, 0xca, 0x45, 0x9e, 0x83, 0x15, 0x36, 0x85, 0xdc, 0x84, 0xed, 0xe9,
-	0x18, 0x4c, 0x06, 0x86, 0x27, 0xc2, 0x48, 0xaf, 0xe7, 0x65, 0x2f, 0x91, 0x56, 0xf4, 0xb8, 0x16,
-	0x2a, 0xcd, 0x1d, 0x1c, 0xd8, 0xd6, 0x6f, 0x0d, 0x2d, 0xa6, 0x22, 0x0b, 0x86, 0x6e, 0x0b, 0x93,
-	0xeb, 0x65, 0xee, 0xca, 0x0d, 0x47, 0x72, 0x52, 0x48, 0x63, 0xbb, 0x97, 0xb8, 0xb9, 0x36, 0x35,
-	0x1a, 0x72, 0x23, 0xc9, 0x39, 0x6e, 0xf8, 0x70, 0x1b, 0x75, 0xd0, 0xf1, 0x6e, 0xbf, 0xcd, 0xfe,
-	0x5e, 0xc1, 0x7c, 0x62, 0xb8, 0x3d, 0xff, 0x3c, 0x88, 0x46, 0x81, 0xee, 0x3f, 0x23, 0xbc, 0xe3,
-	0x7c, 0xe4, 0x11, 0x37, 0x3c, 0x41, 0x0e, 0x37, 0xb3, 0x9b, 0x45, 0xe2, 0xa3, 0x7f, 0x28, 0x5f,
-	0xac, 0xdb, 0x79, 0x79, 0xff, 0x7e, 0xdb, 0x8a, 0x49, 0x9b, 0x3b, 0x9c, 0x97, 0x03, 0xbe, 0x7e,
-	0xed, 0xf0, 0x62, 0x5e, 0x51, 0xb4, 0xa8, 0x28, 0xfa, 0xaa, 0x28, 0x7a, 0xad, 0x69, 0xb4, 0xa8,
-	0x69, 0xf4, 0x51, 0xd3, 0xe8, 0xe6, 0x44, 0xa5, 0xf6, 0xbe, 0x48, 0xd8, 0x18, 0xb2, 0x90, 0x5e,
-	0x39, 0x9e, 0x56, 0x16, 0x3b, 0xd3, 0xd2, 0x24, 0x0d, 0xf7, 0x67, 0x67, 0x3f, 0x01, 0x00, 0x00,
-	0xff, 0xff, 0x51, 0x4a, 0xb2, 0x7f, 0xd2, 0x01, 0x00, 0x00,
+	// 485 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x93, 0x3f, 0x6f, 0x13, 0x31,
+	0x18, 0xc6, 0xe3, 0x96, 0xa6, 0xc2, 0x2c, 0xc8, 0x0d, 0x90, 0x1e, 0xe8, 0x68, 0xcd, 0xbf, 0x86,
+	0xc1, 0x56, 0x8b, 0x84, 0x94, 0xb1, 0x45, 0x6a, 0x27, 0xa4, 0x72, 0x62, 0x62, 0xc2, 0xd7, 0x9a,
+	0xe3, 0xa4, 0xbb, 0xf3, 0x35, 0x76, 0x8e, 0x56, 0x88, 0x05, 0xb1, 0xb0, 0x21, 0x75, 0xe6, 0xfb,
+	0x74, 0xac, 0xc4, 0xc2, 0x84, 0x50, 0xc2, 0x07, 0x41, 0xb1, 0xdf, 0x2b, 0x49, 0xcd, 0x29, 0x30,
+	0x39, 0xb1, 0x9f, 0xe7, 0x79, 0x7f, 0x7e, 0xfd, 0x1e, 0x5e, 0x79, 0x23, 0xe5, 0x61, 0xaa, 0x0d,
+	0x3f, 0x1a, 0xca, 0xc1, 0x09, 0x2b, 0x07, 0xca, 0x28, 0x72, 0x5d, 0x56, 0xb9, 0xd2, 0xac, 0xea,
+	0x33, 0x38, 0x0d, 0x3a, 0x89, 0x4a, 0x94, 0x3d, 0xe4, 0x93, 0x5f, 0x4e, 0x17, 0xdc, 0x49, 0x94,
+	0x4a, 0x32, 0xc9, 0x45, 0x99, 0x72, 0x51, 0x14, 0xca, 0x08, 0x93, 0xaa, 0x42, 0xc3, 0xe9, 0xe3,
+	0x03, 0xa5, 0x73, 0xa5, 0x79, 0x2c, 0xb4, 0x74, 0xf1, 0xbc, 0xda, 0x8c, 0xa5, 0x11, 0x9b, 0xbc,
+	0x14, 0x49, 0x5a, 0x58, 0x31, 0x68, 0x3b, 0x35, 0x46, 0x29, 0x06, 0x22, 0xaf, 0x13, 0x6e, 0xd4,
+	0xbb, 0xb0, 0xba, 0x6d, 0xda, 0xc1, 0xe4, 0xc5, 0x24, 0x6e, 0xdf, 0x6a, 0x23, 0x79, 0x34, 0x94,
+	0xda, 0xd0, 0xe7, 0x78, 0x65, 0x66, 0x57, 0x97, 0xaa, 0xd0, 0x92, 0x3c, 0xc5, 0x6d, 0x97, 0xd9,
+	0x45, 0x6b, 0x68, 0xe3, 0xda, 0x56, 0x97, 0x5d, 0xbe, 0x1c, 0x73, 0x8e, 0x9d, 0x2b, 0x67, 0x3f,
+	0xee, 0xb6, 0x22, 0x50, 0x53, 0x86, 0x6f, 0xda, 0xb8, 0x3d, 0x69, 0x76, 0x9d, 0x0e, 0x0a, 0x91,
+	0x0e, 0x5e, 0x4a, 0x8b, 0x43, 0x79, 0x6c, 0x03, 0xaf, 0x46, 0xee, 0x0f, 0x7d, 0x89, 0x6f, 0x79,
+	0x7a, 0x40, 0xe8, 0xe3, 0x65, 0x28, 0x05, 0x0c, 0xab, 0x3e, 0x03, 0x78, 0x00, 0xa2, 0xd6, 0xd3,
+	0xd7, 0x40, 0xb1, 0x9d, 0x65, 0x97, 0x28, 0x76, 0x31, 0xfe, 0xd3, 0x45, 0xc8, 0x7d, 0xc8, 0x5c,
+	0xcb, 0xd9, 0xa4, 0xe5, 0xcc, 0xbd, 0x28, 0xb4, 0x9c, 0xed, 0x8b, 0x44, 0x82, 0x37, 0x9a, 0x72,
+	0xd2, 0xaf, 0x08, 0xc0, 0xa7, 0x4b, 0xfc, 0x0d, 0x7c, 0xf1, 0x7f, 0xc0, 0xc9, 0xde, 0x0c, 0xde,
+	0x82, 0xc5, 0x7b, 0x34, 0x17, 0xcf, 0xd5, 0x9d, 0xe6, 0xdb, 0x3a, 0x5d, 0xc4, 0x4b, 0x96, 0x8f,
+	0xbc, 0xc3, 0x6d, 0xf7, 0x52, 0xe4, 0xbe, 0x8f, 0xe1, 0x0f, 0x44, 0xf0, 0x60, 0x8e, 0xca, 0x15,
+	0xa3, 0x6b, 0x1f, 0xbf, 0xfd, 0x3a, 0x5d, 0x08, 0x48, 0x97, 0x5b, 0x39, 0xaf, 0xfa, 0x7c, 0x76,
+	0x18, 0xc9, 0x67, 0x84, 0x97, 0xe1, 0x9a, 0x64, 0xa3, 0x21, 0xd4, 0x1b, 0x93, 0xa0, 0xf7, 0x0f,
+	0x4a, 0x40, 0xe8, 0x59, 0x84, 0x7b, 0x64, 0xdd, 0x47, 0xa8, 0xd7, 0xf7, 0x76, 0xca, 0x3e, 0x90,
+	0x4f, 0x08, 0x63, 0xb0, 0x6f, 0x67, 0x59, 0x23, 0x8e, 0x37, 0x2f, 0x8d, 0x38, 0xfe, 0xb3, 0xd3,
+	0x75, 0x8b, 0x73, 0x9b, 0xac, 0x36, 0xe2, 0xec, 0x3c, 0x3b, 0x1b, 0x85, 0xe8, 0x7c, 0x14, 0xa2,
+	0x9f, 0xa3, 0x10, 0x7d, 0x19, 0x87, 0xad, 0xf3, 0x71, 0xd8, 0xfa, 0x3e, 0x0e, 0x5b, 0xaf, 0x7a,
+	0x49, 0x6a, 0xde, 0x0e, 0x63, 0x76, 0xa0, 0x72, 0xb0, 0x5f, 0x84, 0x1c, 0x5f, 0xc4, 0x98, 0x93,
+	0x52, 0xea, 0xb8, 0x6d, 0x3f, 0xe7, 0x27, 0xbf, 0x03, 0x00, 0x00, 0xff, 0xff, 0xcb, 0x22, 0x2d,
+	0xd0, 0x84, 0x04, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -157,6 +357,10 @@ const _ = grpc.SupportPackageIsVersion4
 type QueryClient interface {
 	// Parameters queries the parameters of the module.
 	Params(ctx context.Context, in *QueryParamsRequest, opts ...grpc.CallOption) (*QueryParamsResponse, error)
+	// Queries a Feedist by index.
+	Feedist(ctx context.Context, in *QueryGetFeedistRequest, opts ...grpc.CallOption) (*QueryGetFeedistResponse, error)
+	// Queries a list of Feedist items.
+	FeedistAll(ctx context.Context, in *QueryAllFeedistRequest, opts ...grpc.CallOption) (*QueryAllFeedistResponse, error)
 }
 
 type queryClient struct {
@@ -176,10 +380,32 @@ func (c *queryClient) Params(ctx context.Context, in *QueryParamsRequest, opts .
 	return out, nil
 }
 
+func (c *queryClient) Feedist(ctx context.Context, in *QueryGetFeedistRequest, opts ...grpc.CallOption) (*QueryGetFeedistResponse, error) {
+	out := new(QueryGetFeedistResponse)
+	err := c.cc.Invoke(ctx, "/evmos.v9.feedist.Query/Feedist", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *queryClient) FeedistAll(ctx context.Context, in *QueryAllFeedistRequest, opts ...grpc.CallOption) (*QueryAllFeedistResponse, error) {
+	out := new(QueryAllFeedistResponse)
+	err := c.cc.Invoke(ctx, "/evmos.v9.feedist.Query/FeedistAll", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QueryServer is the server API for Query service.
 type QueryServer interface {
 	// Parameters queries the parameters of the module.
 	Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error)
+	// Queries a Feedist by index.
+	Feedist(context.Context, *QueryGetFeedistRequest) (*QueryGetFeedistResponse, error)
+	// Queries a list of Feedist items.
+	FeedistAll(context.Context, *QueryAllFeedistRequest) (*QueryAllFeedistResponse, error)
 }
 
 // UnimplementedQueryServer can be embedded to have forward compatible implementations.
@@ -188,6 +414,12 @@ type UnimplementedQueryServer struct {
 
 func (*UnimplementedQueryServer) Params(ctx context.Context, req *QueryParamsRequest) (*QueryParamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Params not implemented")
+}
+func (*UnimplementedQueryServer) Feedist(ctx context.Context, req *QueryGetFeedistRequest) (*QueryGetFeedistResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Feedist not implemented")
+}
+func (*UnimplementedQueryServer) FeedistAll(ctx context.Context, req *QueryAllFeedistRequest) (*QueryAllFeedistResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FeedistAll not implemented")
 }
 
 func RegisterQueryServer(s grpc1.Server, srv QueryServer) {
@@ -212,6 +444,42 @@ func _Query_Params_Handler(srv interface{}, ctx context.Context, dec func(interf
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Query_Feedist_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryGetFeedistRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).Feedist(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/evmos.v9.feedist.Query/Feedist",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).Feedist(ctx, req.(*QueryGetFeedistRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Query_FeedistAll_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryAllFeedistRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).FeedistAll(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/evmos.v9.feedist.Query/FeedistAll",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).FeedistAll(ctx, req.(*QueryAllFeedistRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Query_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "evmos.v9.feedist.Query",
 	HandlerType: (*QueryServer)(nil),
@@ -219,6 +487,14 @@ var _Query_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Params",
 			Handler:    _Query_Params_Handler,
+		},
+		{
+			MethodName: "Feedist",
+			Handler:    _Query_Feedist_Handler,
+		},
+		{
+			MethodName: "FeedistAll",
+			Handler:    _Query_FeedistAll_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -281,6 +557,153 @@ func (m *QueryParamsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *QueryGetFeedistRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryGetFeedistRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryGetFeedistRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Index) > 0 {
+		i -= len(m.Index)
+		copy(dAtA[i:], m.Index)
+		i = encodeVarintQuery(dAtA, i, uint64(len(m.Index)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryGetFeedistResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryGetFeedistResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryGetFeedistResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	{
+		size, err := m.Feedist.MarshalToSizedBuffer(dAtA[:i])
+		if err != nil {
+			return 0, err
+		}
+		i -= size
+		i = encodeVarintQuery(dAtA, i, uint64(size))
+	}
+	i--
+	dAtA[i] = 0xa
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryAllFeedistRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryAllFeedistRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryAllFeedistRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Pagination != nil {
+		{
+			size, err := m.Pagination.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintQuery(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryAllFeedistResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryAllFeedistResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryAllFeedistResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Pagination != nil {
+		{
+			size, err := m.Pagination.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintQuery(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Feedist) > 0 {
+		for iNdEx := len(m.Feedist) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Feedist[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintQuery(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0xa
+		}
+	}
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintQuery(dAtA []byte, offset int, v uint64) int {
 	offset -= sovQuery(v)
 	base := offset
@@ -309,6 +732,62 @@ func (m *QueryParamsResponse) Size() (n int) {
 	_ = l
 	l = m.Params.Size()
 	n += 1 + l + sovQuery(uint64(l))
+	return n
+}
+
+func (m *QueryGetFeedistRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Index)
+	if l > 0 {
+		n += 1 + l + sovQuery(uint64(l))
+	}
+	return n
+}
+
+func (m *QueryGetFeedistResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = m.Feedist.Size()
+	n += 1 + l + sovQuery(uint64(l))
+	return n
+}
+
+func (m *QueryAllFeedistRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Pagination != nil {
+		l = m.Pagination.Size()
+		n += 1 + l + sovQuery(uint64(l))
+	}
+	return n
+}
+
+func (m *QueryAllFeedistResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.Feedist) > 0 {
+		for _, e := range m.Feedist {
+			l = e.Size()
+			n += 1 + l + sovQuery(uint64(l))
+		}
+	}
+	if m.Pagination != nil {
+		l = m.Pagination.Size()
+		n += 1 + l + sovQuery(uint64(l))
+	}
 	return n
 }
 
@@ -427,6 +906,377 @@ func (m *QueryParamsResponse) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if err := m.Params.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryGetFeedistRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryGetFeedistRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryGetFeedistRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Index", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Index = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryGetFeedistResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryGetFeedistResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryGetFeedistResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Feedist", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if err := m.Feedist.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryAllFeedistRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryAllFeedistRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryAllFeedistRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Pagination", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Pagination == nil {
+				m.Pagination = &query.PageRequest{}
+			}
+			if err := m.Pagination.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryAllFeedistResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryAllFeedistResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryAllFeedistResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Feedist", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Feedist = append(m.Feedist, Feedist{})
+			if err := m.Feedist[len(m.Feedist)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Pagination", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Pagination == nil {
+				m.Pagination = &query.PageResponse{}
+			}
+			if err := m.Pagination.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex

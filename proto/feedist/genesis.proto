@@ -3,6 +3,7 @@ package evmos.v9.feedist;
 
 import "gogoproto/gogo.proto";
 import "feedist/params.proto";
+import "feedist/feedist.proto";
 // this line is used by starport scaffolding # genesis/proto/import
 
 option go_package = "github.com/evmos/evmos/v9/x/feedist/types";
@@ -10,5 +11,6 @@ option go_package = "github.com/evmos/evmos/v9/x/feedist/types";
 // GenesisState defines the feedist module's genesis state.
 message GenesisState {
   Params params = 1 [(gogoproto.nullable) = false];
+  repeated Feedist feedistList = 2 [(gogoproto.nullable) = false];
   // this line is used by starport scaffolding # genesis/proto/state
 }
