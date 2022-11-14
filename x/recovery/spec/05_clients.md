@@ -8,7 +8,7 @@ A user can query the `x/recovery` module using the CLI, gRPC or REST.
 
 ## CLI
 
-Find below a list of `evmosd` commands added with the `x/recovery` module. You can obtain the full list by using the `evmosd` -h command.
+Find below a list of `cascadiad` commands added with the `x/recovery` module. You can obtain the full list by using the `cascadiad` -h command.
 
 ### Queries
 
@@ -18,7 +18,7 @@ The query commands allow users to query Recovery state.
 Allows users to query the module parameters.
 
 ```bash
-evmosd query recovery params [flags]
+cascadiad query recovery params [flags]
 ```
 
 ## gRPC

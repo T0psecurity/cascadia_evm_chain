@@ -74,7 +74,7 @@ module.exports = {
       name: "Evmos",
       denom: "Evmos",
       ticker: "EVMOS",
-      binary: "evmosd",
+      binary: "cascadiad",
       testnet_denom: "tEvmos",
       testnet_ticker: "tEVMOS",
       rpc_url: "https://eth.bd.evmos.org:8545",
