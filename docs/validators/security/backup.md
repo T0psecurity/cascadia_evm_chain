@@ -13,7 +13,7 @@ The validator private key is a Tendermint Key: a unique key used to sign consens
 To backup everything you need to restore your validator, note that if you are using the "software sign" (the default signing method of Tendermint), your Tendermint key is located at:
 
 ```bash
-~/.evmosd/config/priv_validator_key.json
+~/.cascadiad/config/priv_validator_key.json
 ```
 
 Then do the following:
@@ -24,13 +24,13 @@ Then do the following:
 To see your validator's associated public key:
 
 ```bash
-evmosd tendermint show-validator
+cascadiad tendermint show-validator
 ```
 
 To see your validator's associated bech32 address:
 
 ```bash
-evmosd tendermint show-address
+cascadiad tendermint show-address
 ```
 
 You can also use hardware to store your Tendermint Key much more safely, such as [YubiHSM2](https://developers.yubico.com/YubiHSM2/).
