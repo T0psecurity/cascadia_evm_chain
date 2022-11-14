@@ -8,7 +8,7 @@ A user can query the `x/claims` module using the CLI, gRPC or REST.
 
 ## CLI
 
-Find below a list of `evmosd` commands added with the `x/claims` module. You can obtain the full list by using the `evmosd -h` command.
+Find below a list of `cascadiad` commands added with the `x/claims` module. You can obtain the full list by using the `cascadiad -h` command.
 
 ### Queries
 
@@ -19,7 +19,7 @@ The `query` commands allow users to query `claims` state.
 Allows users to query total amount of unclaimed tokens from the airdrop.
 
 ```bash
-evmosd query claims total-unclaimed [flags]
+cascadiad query claims total-unclaimed [flags]
 ```
 
 **`records`**
@@ -27,7 +27,7 @@ evmosd query claims total-unclaimed [flags]
 Allows users to query all the claims records available.
 
 ```bash
-evmosd query claims records [flags]
+cascadiad query claims records [flags]
 ```
 
 **`record`**
@@ -35,7 +35,7 @@ evmosd query claims records [flags]
 Allows users to query a claims record for a given user.
 
 ```bash
-evmosd query claims record [address] [flags]
+cascadiad query claims record [address] [flags]
 ```
 
 **`params`**
@@ -43,7 +43,7 @@ evmosd query claims record [address] [flags]
 Allows users to query claims params.
 
 ```bash
-evmosd query claims params [flags]
+cascadiad query claims params [flags]
 ```
 
 ## gRPC

@@ -35,7 +35,7 @@ archived [9001-1 mainnet](https://github.com/tharsis/mainnet/tree/main/evmos_900
 To access snapshots and archives, follow the process below (this code snippet is to access a snapshot of the current network, `evmos_9001-2`, from Nodes Guru):
 
 ```bash
-cd $HOME/.evmosd/data
+cd $HOME/.cascadiad/data
 wget https://snapshots.nodes.guru/evmos_9001-2/evmos_9001-2-410819.tar
 tar xf evmos_9001-2-410819.tar
 ```

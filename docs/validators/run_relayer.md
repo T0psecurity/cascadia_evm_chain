@@ -27,10 +27,10 @@ In this example, the default ports for Evmos will be used, and the ports of the 
 
 ## Evmos Daemon Settings
 
-First, set `grpc server` on port `9090` in the `app.toml` file from the `$HOME/.evmosd/config` directory:
+First, set `grpc server` on port `9090` in the `app.toml` file from the `$HOME/.cascadiad/config` directory:
 
 ```bash
-vim $HOME/.evmosd/config/app.toml
+vim $HOME/.cascadiad/config/app.toml
 ```
 
 ```bash
@@ -43,10 +43,10 @@ enable = true
 address = "0.0.0.0:9090"
 ```
 
-Then, set the `pprof_laddr` to port `6060`, `rpc laddr` to port `26657`, and `prp laddr` to `26656` in the `config.toml` file from the `$HOME/.evmosd/config` directory:
+Then, set the `pprof_laddr` to port `6060`, `rpc laddr` to port `26657`, and `prp laddr` to `26656` in the `config.toml` file from the `$HOME/.cascadiad/config` directory:
 
 ```bash
-vim $HOME/.evmosd/config/config.toml
+vim $HOME/.cascadiad/config/config.toml
 ```
 
 ```bash
