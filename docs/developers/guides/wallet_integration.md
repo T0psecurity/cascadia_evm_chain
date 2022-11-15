@@ -55,11 +55,11 @@ import { createMessageSend } from @tharsis/transactions
 
 const chain = {
     chainId: 9000,
-    cosmosChainId: 'evmos_9000-4',
+    cosmosChainId: 'cascadia_9000-4',
 }
 
 const sender = {
-    accountAddress: 'evmos1mx9nqk5agvlsvt2yc8259nwztmxq7zjq50mxkp',
+    accountAddress: 'cascadia1mx9nqk5agvlsvt2yc8259nwztmxq7zjq50mxkp',
     sequence: 1,
     accountNumber: 9,
     pubkey: 'AgTw+4v0daIrxsNSW4FcQ+IoingPseFwHO1DnssyoOqZ',
@@ -67,7 +67,7 @@ const sender = {
 
 const fee = {
     amount: '20',
-    denom: 'aevmos',
+    denom: 'uCC',
     gas: '200000',
 }
 
@@ -76,7 +76,7 @@ const memo = ''
 const params = {
     destinationAddress: 'evmos1pmk2r32ssqwps42y3c9d4clqlca403yd9wymgr',
     amount: '1',
-    denom: 'aevmos',
+    denom: 'uCC',
 }
 
 const msg = createMessageSend(chain, sender, fee, memo, params)
@@ -129,7 +129,7 @@ const postOptions = {
 };
 
 let broadcastPost = await fetch(
-    `https://eth.bd.evmos.dev:8545${generateEndpointBroadcast()}`,
+    `https://devnet.cascaida.foundation${generateEndpointBroadcast()}`,
     postOptions
 );
 let response = await broadcastPost.json();

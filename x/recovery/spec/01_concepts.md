@@ -16,7 +16,7 @@ Some chains use different elliptic curves for generating public keys. An example
 ethPrivKey, err := ethsecp256k1.GenerateKey()
 ethsecpAddr := sdk.AccAddress(ethPrivKey.PubKey().Address())
 
-// Bech32 "evmos" address
+// Bech32 "cascadia" address
 ethsecpAddrEvmos := sdk.AccAddress(ethPk.PubKey().Address()).String()
 
 // We can also change the HRP to use "cosmos"
@@ -78,13 +78,13 @@ This means that the IBC transfer will be executed first, then the claim will be 
 
 **Example execution order**
 
-1. User attempts to recover `1000aevmos` that are stuck on the Evmos chain.
+1. User attempts to recover `1000uCC` that are stuck on the Evmos chain.
 2. User sends `100uosmo` from Osmosis to Evmos through an IBC transaction.
 3. Evmos receives the transaction, and goes through the IBC stack:
     1. **IBC transfer**: the `100uosmo` IBC vouchers are added to the user balance on evmos.
     2. **Claims Middleware**: since `sender=receiver` -> perform no-op
-    3. **Recovery Middleware**: since `sender=receiver` -> recover user balance (`1000aevmos` and `100uosmo`) by sending an IBC transfer from `receiver` to the `sender` on the Osmosis chain.
-4. User receives `100uosmo` and `1000aevmos` (IBC voucher) on Osmosis.
+    3. **Recovery Middleware**: since `sender=receiver` -> recover user balance (`1000uCC` and `100uosmo`) by sending an IBC transfer from `receiver` to the `sender` on the Osmosis chain.
+4. User receives `100uosmo` and `1000uCC` (IBC voucher) on Osmosis.
 
 ### Execution errors
 

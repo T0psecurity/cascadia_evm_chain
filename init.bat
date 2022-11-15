@@ -38,11 +38,11 @@ cascadiad keys add %KEY% --keyring-backend %KEYRING% --algo %KEYALGO%
 rem Set moniker and chain-id for Evmos (Moniker can be anything, chain-id must be an integer)
 cascadiad init %MONIKER% --chain-id %CHAINID% 
 
-rem Change parameter token denominations to aevmos
-cat %GENESIS% | jq ".app_state[\"staking\"][\"params\"][\"bond_denom\"]=\"aevmos\""   >   %TMPGENESIS% && move %TMPGENESIS% %GENESIS%
-cat %GENESIS% | jq ".app_state[\"crisis\"][\"constant_fee\"][\"denom\"]=\"aevmos\"" > %TMPGENESIS% && move %TMPGENESIS% %GENESIS%
-cat %GENESIS% | jq ".app_state[\"gov\"][\"deposit_params\"][\"min_deposit\"][0][\"denom\"]=\"aevmos\"" > %TMPGENESIS% && move %TMPGENESIS% %GENESIS%
-cat %GENESIS% | jq ".app_state[\"mint\"][\"params\"][\"mint_denom\"]=\"aevmos\"" > %TMPGENESIS% && move %TMPGENESIS% %GENESIS%
+rem Change parameter token denominations to uCC
+cat %GENESIS% | jq ".app_state[\"staking\"][\"params\"][\"bond_denom\"]=\"uCC\""   >   %TMPGENESIS% && move %TMPGENESIS% %GENESIS%
+cat %GENESIS% | jq ".app_state[\"crisis\"][\"constant_fee\"][\"denom\"]=\"uCC\"" > %TMPGENESIS% && move %TMPGENESIS% %GENESIS%
+cat %GENESIS% | jq ".app_state[\"gov\"][\"deposit_params\"][\"min_deposit\"][0][\"denom\"]=\"uCC\"" > %TMPGENESIS% && move %TMPGENESIS% %GENESIS%
+cat %GENESIS% | jq ".app_state[\"mint\"][\"params\"][\"mint_denom\"]=\"uCC\"" > %TMPGENESIS% && move %TMPGENESIS% %GENESIS%
 
 rem increase block time (?)
 cat %GENESIS% | jq ".consensus_params[\"block\"][\"time_iota_ms\"]=\"30000\"" > %TMPGENESIS% && move %TMPGENESIS% %GENESIS%
@@ -54,10 +54,10 @@ rem setup
 sed -i "s/create_empty_blocks = true/create_empty_blocks = false/g" %ETHCONFIG%
 
 rem Allocate genesis accounts (cosmos formatted addresses)
-cascadiad add-genesis-account %KEY% 100000000000000000000000000aevmos --keyring-backend %KEYRING%
+cascadiad add-genesis-account %KEY% 100000000000000000000000000uCC --keyring-backend %KEYRING%
 
 rem Sign genesis transaction
-cascadiad gentx %KEY% 1000000000000000000000aevmos --keyring-backend %KEYRING% --chain-id %CHAINID%
+cascadiad gentx %KEY% 1000000000000000000000uCC --keyring-backend %KEYRING% --chain-id %CHAINID%
 
 rem Collect genesis tx
 cascadiad collect-gentxs
@@ -68,4 +68,4 @@ cascadiad validate-genesis
 
 
 rem Start the node (remove the --pruning=nothing flag if historical queries are not needed)
-cascadiad start --pruning=nothing %TRACE% --log_level %LOGLEVEL% --minimum-gas-prices=0.0001aevmos
+cascadiad start --pruning=nothing %TRACE% --log_level %LOGLEVEL% --minimum-gas-prices=0.0001uCC

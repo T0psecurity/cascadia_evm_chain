@@ -33,7 +33,7 @@ You can register a contract by signing a transaction with the address that origi
 # Register a revenue for your contract
 cascadiad tx revenue register $CONTRACT $NONCE $WITHDRAWER \
 --from=mykey \ # contract deployer key
---gas=700000 --gas-prices=10000aevmos \ # can vary depending on the network
+--gas=700000 --gas-prices=10000uCC \ # can vary depending on the network
 ```
 
 After your transaction is submitted successfully, you can query your `revenue` with :
@@ -58,7 +58,7 @@ Registered contracts can also be updated. To update the withdrawer address of yo
 ```bash
 # Update withdrawer for your contract
 cascadiad tx revenue update $CONTRACT $WITHDRAWER \
---gas=700000 --gas-prices=10000aevmos \
+--gas=700000 --gas-prices=10000uCC \
 --from=mm
 ```
 
@@ -71,6 +71,6 @@ Revenues can also be canceled. In order to stop receiving transaction fees for i
 ```bash
 # Cancel revenue for your contract
 cascadiad tx revenue cancel $CONTRACT \
---gas=700000 --gas-prices=10000aevmos \
+--gas=700000 --gas-prices=10000uCC \
 --from=mm
 ```

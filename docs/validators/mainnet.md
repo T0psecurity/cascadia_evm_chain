@@ -16,8 +16,8 @@ You need to set the **genesis file** and **seeds**. If you need more information
 
 | Chain ID       | Description     | Site                                                               | Version                                                      | Status  |
 | -------------- | --------------- | ------------------------------------------------------------------ | ------------------------------------------------------------ | ------- |
-| `evmos_9001-2` | Evmos Mainnet 2 | [Evmos](https://github.com/tharsis/mainnet/tree/main/evmos_9001-2) | [`{{ $themeConfig.project.latest_version }}`](https://github.com/evmos/evmos/releases) | `Live`  |
-| `evmos_9001-1` | Evmos Mainnet 1 | [Evmos](https://github.com/tharsis/mainnet/tree/main/evmos_9001-1) | [`v2.0.1`](https://github.com/evmos/evmos/releases/v2.0.1) | `Stale` |
+| `cascadia_9001-2` | Evmos Mainnet 2 | [Evmos](https://github.com/tharsis/mainnet/tree/main/evmos_9001-2) | [`{{ $themeConfig.project.latest_version }}`](https://github.com/evmos/evmos/releases) | `Live`  |
+| `cascadia_9001-1` | Evmos Mainnet 1 | [Evmos](https://github.com/tharsis/mainnet/tree/main/evmos_9001-1) | [`v2.0.1`](https://github.com/evmos/evmos/releases/v2.0.1) | `Stale` |
 
 ::: warning
 **IMPORTANT:** If you join mainnet as a validator make sure you follow all the [security](./security/security.md) recommendations!
@@ -48,7 +48,7 @@ cascadiad config chain-id evmos_9001-2
 We need to initialize the node to create all the necessary validator and node configuration files:
 
 ```bash
-cascadiad init <your_custom_moniker> --chain-id evmos_9001-2
+cascadiad init <your_custom_moniker> --chain-id cascadia_9001-2
 ```
 
 ::: danger
@@ -129,7 +129,7 @@ For more details on how to run your validator, follow the validator [these](./se
 
 ```bash
 cascadiad tx staking create-validator \
-  --amount=1000000000000aevmos \
+  --amount=1000000000000uCC \
   --pubkey=$(cascadiad tendermint show-validator) \
   --moniker="EvmosWhale" \
   --chain-id=<chain_id> \
@@ -138,7 +138,7 @@ cascadiad tx staking create-validator \
   --commission-max-change-rate="0.01" \
   --min-self-delegation="1000000" \
   --gas="auto" \
-  --gas-prices="0.025aevmos" \
+  --gas-prices="0.025uCC" \
   --from=<key_name>
 ```
 

@@ -24,7 +24,7 @@ Upon [installation](../../validators/quickstart/installation.md) and [configurat
 $ cascadiad query bank balances $EVMOSADDRESS --count-total=$COUNTTOTAL --height=$HEIGHT --output=$OUTPUT --node=$NODE
 balances:
 - amount: "1000000000000000000"
-  denom: aevmos
+  denom: uCC
 - amount: "100000"
   denom: ibc/ED07A3391A112B175915CD8FAF43A2DA8E4790EDE12566649D0C2F97716B8518
 pagination:
@@ -40,7 +40,7 @@ where:
 - (optional) `$OUTPUT` is the output format (eg. `text`).
 - (optional if running local node) `$NODE` is the Tendermint RPC node information is requested from (eg. `https://tendermint.bd.evmos.org:26657`).
 
-Details of non-native currencies (ie. not `aevmos`) can be queried with the following CLI command:
+Details of non-native currencies (ie. not `uCC`) can be queried with the following CLI command:
 
 ```bash
 $ cascadiad query erc20 token-pair $DENOM --node=$NODE --height=$HEIGHT --output=$OUTPUT
@@ -55,7 +55,7 @@ where `$DENOM` is the denomination of the coin (eg. `ibc/ED07A3391A1...`).
 
 ## JSON-RPC
 
-Developers can query account balances of `aevmos` using the [`eth_getBalance`](../json-rpc/endpoints.md#ethgetbalance) JSON-RPC method in conjunction with [`curl`](https://curl.se/):
+Developers can query account balances of `uCC` using the [`eth_getBalance`](../json-rpc/endpoints.md#ethgetbalance) JSON-RPC method in conjunction with [`curl`](https://curl.se/):
 
 ```bash
 # Request

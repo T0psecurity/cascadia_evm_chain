@@ -1,14 +1,14 @@
 accounts:
   - name: alice
-    coins: ["100000000uatom", "100000000000000000000aevmos"]
+    coins: ["100000000uatom", "100000000000000000000uCC"]
   - name: bob
-    coins: ["5000000000000aevmos"]
+    coins: ["5000000000000uCC"]
 validator:
   name: alice
-  staked: "100000000000000000000aevmos"
+  staked: "100000000000000000000uCC"
 faucet:
   name: bob 
-  coins: ["10aevmos"]
+  coins: ["10uCC"]
 build:
   binary: "cascadiad"
 init:
@@ -22,18 +22,18 @@ genesis:
   app_state:
     staking:
       params:
-        bond_denom: "aevmos"
+        bond_denom: "uCC"
     mint:
       params:
-        mint_denom: "aevmos"
+        mint_denom: "uCC"
     crisis:
       constant_fee:
-        denom: "aevmos"
+        denom: "uCC"
     gov:
       deposit_params:
         min_deposit:
           - amount: "10000000"
-            denom: "aevmos"
+            denom: "uCC"
     evm:
       params:
-        evm_denom: "aevmos"
+        evm_denom: "uCC"

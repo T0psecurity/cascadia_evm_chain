@@ -15,7 +15,7 @@ import (
 
 func init() {
 	cfg := sdk.GetConfig()
-	cfg.SetBech32PrefixForAccount("evmos", "evmospub")
+	cfg.SetBech32PrefixForAccount("cascadia", "cascadiapub")
 }
 
 func TestGetTransferSenderRecipient(t *testing.T) {
