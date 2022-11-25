@@ -37,7 +37,7 @@ func NewParams(
 // DefaultParams defines the default params for the recovery module
 func DefaultParams() Params {
 	return Params{
-		EnableRecovery:        true,
+		EnableRecovery:        false,
 		PacketTimeoutDuration: DefaultPacketTimeoutDuration,
 	}
 }

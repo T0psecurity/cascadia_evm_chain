@@ -87,7 +87,7 @@ func NewParams(
 // for the claims module.
 func DefaultParams() Params {
 	return Params{
-		EnableClaims:       true,
+		EnableClaims:       false,
 		ClaimsDenom:        DefaultClaimsDenom,
 		AirdropStartTime:   time.Time{},
 		DurationUntilDecay: DefaultDurationUntilDecay,
