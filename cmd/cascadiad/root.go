@@ -46,7 +46,7 @@ import (
 )
 
 const (
-	EnvPrefix = "EVMOS"
+	EnvPrefix = "CASCADIA"
 )
 
 // NewRootCmd creates a new root command for cascadiad. It is called once in the

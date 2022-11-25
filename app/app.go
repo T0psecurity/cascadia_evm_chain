@@ -441,10 +441,20 @@ func NewEvmos(
 		app.AccountKeeper, app.BankKeeper, &stakingKeeper, govRouter,
 	)
 
+	app.FeedistKeeper = *feedistmodulekeeper.NewKeeper(
+		appCodec,
+		keys[feedistmoduletypes.StoreKey],
+		keys[feedistmoduletypes.MemStoreKey],
+		app.GetSubspace(feedistmoduletypes.ModuleName),
+
+		app.BankKeeper,
+		app.EvmKeeper,
+		authtypes.FeeCollectorName,
+	)
 	// Evmos Keeper
 	app.InflationKeeper = inflationkeeper.NewKeeper(
 		keys[inflationtypes.StoreKey], appCodec, app.GetSubspace(inflationtypes.ModuleName),
-		app.AccountKeeper, app.BankKeeper, app.DistrKeeper, &stakingKeeper,
+		app.AccountKeeper, app.BankKeeper, app.DistrKeeper, &stakingKeeper, app.FeedistKeeper,
 		authtypes.FeeCollectorName,
 	)
 
@@ -482,17 +492,6 @@ func NewEvmos(
 	app.RevenueKeeper = revenuekeeper.NewKeeper(
 		keys[revenuetypes.StoreKey], appCodec, app.GetSubspace(revenuetypes.ModuleName),
 		app.BankKeeper, app.EvmKeeper,
-		authtypes.FeeCollectorName,
-	)
-
-	app.FeedistKeeper = *feedistmodulekeeper.NewKeeper(
-		appCodec,
-		keys[feedistmoduletypes.StoreKey],
-		keys[feedistmoduletypes.MemStoreKey],
-		app.GetSubspace(feedistmoduletypes.ModuleName),
-
-		app.BankKeeper,
-		app.EvmKeeper,
 		authtypes.FeeCollectorName,
 	)
 

@@ -13,8 +13,8 @@ import (
 )
 
 var (
-	// DefaultClaimsDenom is aevmos
-	DefaultClaimsDenom = "aevmos"
+	// DefaultClaimsDenom is uCC
+	DefaultClaimsDenom = "uCC"
 	// DefaultDurationUntilDecay is 1 month = 30.4375 days
 	DefaultDurationUntilDecay = 2629800 * time.Second
 	// DefaultDurationOfDecay is 2 months
@@ -87,7 +87,7 @@ func NewParams(
 // for the claims module.
 func DefaultParams() Params {
 	return Params{
-		EnableClaims:       true,
+		EnableClaims:       false,
 		ClaimsDenom:        DefaultClaimsDenom,
 		AirdropStartTime:   time.Time{},
 		DurationUntilDecay: DefaultDurationUntilDecay,

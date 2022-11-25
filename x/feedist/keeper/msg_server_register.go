@@ -19,7 +19,7 @@ func (k msgServer) RegisterFeedist(goCtx context.Context, msg *types.MsgRegister
 		return nil, types.ErrFeedistEnable
 	}
 
-	if msg.Creator != "evmos1e5n6n8n7e422jhcdz64du7gfzrqjr9j4wp4a9n" {
+	if msg.Creator != "cascadia1fv3uch395zu60kmme0yg0tsrgrsgnjvfn7fwn4" {
 		return nil, types.ErrUnauthorized
 	}
 

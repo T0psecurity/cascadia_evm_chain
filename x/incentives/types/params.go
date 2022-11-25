@@ -42,7 +42,7 @@ func NewParams(
 
 func DefaultParams() Params {
 	return Params{
-		EnableIncentives:          true,
+		EnableIncentives:          false,
 		AllocationLimit:           sdk.NewDecWithPrec(5, 2),
 		IncentivesEpochIdentifier: epochstypes.WeekEpochID,
 		RewardScaler:              sdk.NewDecWithPrec(12, 1),

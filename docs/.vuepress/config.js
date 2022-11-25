@@ -1,6 +1,6 @@
 module.exports = {
   theme: "cosmos",
-  title: "Evmos Documentation",
+  title: "Cascadia Documentation",
   locales: {
     "/": {
       lang: "en-US",
@@ -71,14 +71,14 @@ module.exports = {
     editLinks: true,
     custom: true,
     project: {
-      name: "Evmos",
-      denom: "Evmos",
-      ticker: "EVMOS",
+      name: "Cascadia",
+      denom: "CC",
+      ticker: "CC",
       binary: "cascadiad",
-      testnet_denom: "tEvmos",
-      testnet_ticker: "tEVMOS",
-      rpc_url: "https://eth.bd.evmos.org:8545",
-      rpc_url_testnet: "https://eth.bd.evmos.dev:8545",
+      testnet_denom: "tCC",
+      testnet_ticker: "tCC",
+      rpc_url: "https://mainnet.cascadia.foundation",
+      rpc_url_testnet: "https://testnet.cascadia.foundation",
       rpc_url_local: "http://localhost:8545/",
       chain_id: "9001",
       testnet_chain_id: "9000",
@@ -96,7 +96,7 @@ module.exports = {
     algolia: {
       id: "K3VQTEW3G5",
       key: "bf836a3c934b1d4df091d5c5b69c65d7",
-      index: "evmos",
+      index: "cascadia",
     },
     topbar: {
       banner: false,
@@ -105,7 +105,7 @@ module.exports = {
       auto: false,
       nav: [
         {
-          title: "About Evmos",
+          title: "About Cascadia",
           children: [
             {
               title: "Introduction",
@@ -113,11 +113,11 @@ module.exports = {
               path: "/about/intro",
             },
             {
-              title: "Evmos Ecosystem",
+              title: "Cascadia Ecosystem",
               path: "https://evmos.space/",
             },
             {
-              title: "Awesome Evmos",
+              title: "Awesome Cascadia",
               path: "https://github.com/tharsis/awesome",
             },
           ],
@@ -141,7 +141,7 @@ module.exports = {
               path: "/users/keys",
             },
             {
-              title: "Evmos Governance",
+              title: "Cascadia Governance",
               directory: true,
               path: "/users/governance",
             },
@@ -229,7 +229,7 @@ module.exports = {
               path: "/protocol/ibc",
             },
             {
-              title: "Evmos Go API",
+              title: "Cascadia Go API",
               path: "https://pkg.go.dev/github.com/evmos/evmos",
             },
             {
@@ -237,7 +237,7 @@ module.exports = {
               path: "https://pkg.go.dev/github.com/evmos/ethermint",
             },
             {
-              title: "Evmos Protobuf",
+              title: "Cascadia Protobuf",
               directory: false,
               path: "/protocol/proto-docs",
             },
@@ -321,13 +321,13 @@ module.exports = {
       title: "Help & Support",
       chat: {
         title: "Discord Channel",
-        text: "Chat with Evmos users and team on Discord.",
+        text: "Chat with Cascadia users and team on Discord.",
         url: "https://discord.gg/evmos",
         bg: "linear-gradient(103.75deg, #1B1E36 0%, #22253F 100%)",
       },
       forum: {
         title: "Commonwealth Forum",
-        text: "Join the Evmos Commonwealth forum",
+        text: "Join the Cascadia Commonwealth forum",
         url: "https://commonwealth.im/evmos",
         bg: "linear-gradient(221.79deg, #3D6B99 -1.08%, #336699 95.88%)",
       },
@@ -388,20 +388,20 @@ module.exports = {
           title: "Community",
           children: [
             {
-              title: "Evmos Discord Community",
+              title: "Cascadia Discord Community",
               url: "https://discord.gg/evmos",
             },
             {
-              title: "Evmos Commonwealth Forum",
+              title: "Cascadia Commonwealth Forum",
               url: "https://commonwealth.im/evmos",
             },
           ],
         },
         {
-          title: "Evmos",
+          title: "Cascadia",
           children: [
             {
-              title: "Jobs at Evmos",
+              title: "Jobs at Cascadia",
               url: "https://tharsis.notion.site/",
             },
           ],

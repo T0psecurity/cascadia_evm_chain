@@ -14,11 +14,11 @@ Evmos is powered by [Tendermint](https://docs.tendermint.com/master/introduction
 
 ### What is "staking"?
 
-Evmos is a public Proof-of-Stake (PoS) blockchain, meaning that validator's weight is determined by the amount of staking tokens (EVMOS) bonded as collateral. These staking tokens can be staked directly by the validator or delegated to them by EVMOS holders.
+Evmos is a public Proof-of-Stake (PoS) blockchain, meaning that validator's weight is determined by the amount of staking tokens (CC) bonded as collateral. These staking tokens can be staked directly by the validator or delegated to them by CC holders.
 
 Any user in the system can declare its intention to become a validator by sending a [`create-validator`](#how-to-become-a-validator) transaction. From there, they become validators.
 
-The weight (i.e. total stake or voting power) of a validator determines wether or not it is an active validator, and also how frequently this node will have to propose a block and how much revenue it will obtain. Initially, only the top 150 validators with the most weight will be active validators. If validators double-sign, or are frequently offline, they risk their staked tokens (including EVMOS delegated by users) being "slashed" by the protocol to penalize negligence and misbehavior.
+The weight (i.e. total stake or voting power) of a validator determines wether or not it is an active validator, and also how frequently this node will have to propose a block and how much revenue it will obtain. Initially, only the top 150 validators with the most weight will be active validators. If validators double-sign, or are frequently offline, they risk their staked tokens (including CC delegated by users) being "slashed" by the protocol to penalize negligence and misbehavior.
 
 ### What is a full node?
 
@@ -28,7 +28,7 @@ Of course, it is possible and encouraged for any user to run full nodes even if 
 
 ### What is a delegator?
 
-Delegators are EVMOS holders who cannot, or do not want to run validator operations themselves. Users can delegate EVMOS to a validator and obtain a part of its revenue in exchange (for more detail on how revenue is distributed, see [What is the incentive to stake?](#what-is-the-incentive-to-stake) and [What is a validator's commission?](#what-is-a-validators-commission) sections below).
+Delegators are CC holders who cannot, or do not want to run validator operations themselves. Users can delegate CC to a validator and obtain a part of its revenue in exchange (for more detail on how revenue is distributed, see [What is the incentive to stake?](#what-is-the-incentive-to-stake) and [What is a validator's commission?](#what-is-a-validators-commission) sections below).
 
 Because they share revenue with their validators, delegators also share responsibility. Should a validator misbehave, each of its delegators will be partially slashed in proportion to their stake. This is why delegators should perform due-diligence on validators before delegating, as well as diversifying by spreading their stake over multiple validators.
 
@@ -48,20 +48,20 @@ Any participant in the network can signal their intent to become a validator by 
 - **Initial commission rate**: The commission rate on block provisions, block rewards and fees charged to delegators.
 - **Maximum commission**: The maximum commission rate which this validator will be allowed to charge.
 - **Commission change rate**: The maximum daily increase of the validator commission.
-- **Minimum self-bond amount**: Minimum amount of EVMOS the validator needs to have bonded at all times. If the validator's self-bonded stake falls below this limit, its entire staking pool will be unbonded.
-- **Initial self-bond amount**: Initial amount of EVMOS the validator wants to self-bond.
+- **Minimum self-bond amount**: Minimum amount of CC the validator needs to have bonded at all times. If the validator's self-bonded stake falls below this limit, its entire staking pool will be unbonded.
+- **Initial self-bond amount**: Initial amount of CC the validator wants to self-bond.
 
 ```bash
 cascadiad tx staking create-validator
     --pubkey evmosvalconspub1zcjduepqs5s0vddx5m65h5ntjzwd0x8g3245rgrytpds4ds7vdtlwx06mcesmnkzly
-    --amount "2aevmos"
+    --amount "2uCC"
     --from tmp
     --commission-rate="0.20"
     --commission-max-rate="1.00"
     --commission-max-change-rate="0.01"
     --min-self-delegation "1"
     --moniker "validator"
-    --chain-id "evmos_9000-4"
+    --chain-id "cascadia_9000-4"
     --gas auto
     --node tcp://127.0.0.1:26647
 ```
@@ -72,7 +72,7 @@ cascadiad tx staking create-validator
 Ref: [Security Advisory: Insecurely configured geth can make funds remotely accessible](https://blog.ethereum.org/2015/08/29/security-alert-insecurely-configured-geth-can-make-funds-remotely-accessible/)
 :::
 
-Once a validator is created and registered, EVMOS holders can delegate EVMOS to it, effectively adding stake to its pool. The total stake of a validator is the sum of the EVMOS self-bonded by the validator's operator and the EVMOS bonded by external delegators.
+Once a validator is created and registered, CC holders can delegate CC to it, effectively adding stake to its pool. The total stake of a validator is the sum of the CC self-bonded by the validator's operator and the CC bonded by external delegators.
 
 **Only the top 150 validators with the most stake are considered the active validators**, becoming **bonded validators**. If ever a validator's total stake dips below the top 150, the validator loses its validator privileges (meaning that it won't generate rewards) and no longer serves as part of the active set (i.e doesn't participate in consensus), entering **unbonding mode** and eventually becomes **unbonded**.
 
@@ -82,15 +82,15 @@ Once a validator is created and registered, EVMOS holders can delegate EVMOS to 
 
 In short, there are two types of keys:
 
-- **Tendermint Key**: This is a unique key used to sign block hashes. It is associated with a public key `evmosvalconspub`.
+- **Tendermint Key**: This is a unique key used to sign block hashes. It is associated with a public key `cascadiavalconspub`.
     - Generated when the node is created with `cascadiad init`.
     - Get this value with `cascadiad tendermint show-validator`
-    e.g. `evmosvalconspub1zcjduc3qcyj09qc03elte23zwshdx92jm6ce88fgc90rtqhjx8v0608qh5ssp0w94c`
+    e.g. `cascadiavalconspub1zcjduc3qcyj09qc03elte23zwshdx92jm6ce88fgc90rtqhjx8v0608qh5ssp0w94c`
 
-- **Application keys**: These keys are created from the application and used to sign transactions. As a validator, you will probably use one key to sign staking-related transactions, and another key to sign oracle-related transactions. Application keys are associated with a public key `evmospub-` and an address `evmos-`. Both are derived from account keys generated by `cascadiad keys add`.
+- **Application keys**: These keys are created from the application and used to sign transactions. As a validator, you will probably use one key to sign staking-related transactions, and another key to sign oracle-related transactions. Application keys are associated with a public key `cascadiapub-` and an address `cascadia-`. Both are derived from account keys generated by `cascadiad keys add`.
 
 ::: warning
-A validator's operator key is directly tied to an application key, but uses reserved prefixes solely for this purpose: `evmosvaloper` and `evmosvaloperpub`
+A validator's operator key is directly tied to an application key, but uses reserved prefixes solely for this purpose: `cascadiavaloper` and `cascadiavaloperpub`
 :::
 
 ### What are the different states a validator can be in?
@@ -99,24 +99,24 @@ After a validator is created with a `create-validator` transaction, it can be in
 
 - `bonded`: Validator is in the active set and participates in consensus. Validator is earning rewards and can be slashed for misbehaviour.
 - `unbonding`: Validator is not in the active set and does not participate in consensus. Validator is not earning rewards, but can still be slashed for misbehaviour. This is a transition state from `bonded` to `unbonded`. If validator does not send a `rebond` transaction while in `unbonding` mode, it will take three weeks for the state transition to complete.
-- `unbonded`: Validator is not in the active set, and therefore not signing blocks. Unbonded validators cannot be slashed, but do not earn any rewards from their operation. It is still possible to delegate EVMOS to this validator. Un-delegating from an `unbonded` validator is immediate.
+- `unbonded`: Validator is not in the active set, and therefore not signing blocks. Unbonded validators cannot be slashed, but do not earn any rewards from their operation. It is still possible to delegate CC to this validator. Un-delegating from an `unbonded` validator is immediate.
 
 Delegators have the same state as their validator.
 
 ::: warning
-Delegations are not necessarily bonded. EVMOS can be delegated and bonded, delegated and unbonding, delegated and unbonded, or liquid.
+Delegations are not necessarily bonded. CC can be delegated and bonded, delegated and unbonding, delegated and unbonded, or liquid.
 :::
 
 ### What is "self-bond"? How can I increase my "self-bond"?
 
-The validator operator's "self-bond" refers to the amount of EVMOS stake delegated to itself. You can increase your self-bond by delegating more EVMOS to your validator account.
+The validator operator's "self-bond" refers to the amount of CC stake delegated to itself. You can increase your self-bond by delegating more CC to your validator account.
 
 ### Is there a testnet faucet?
 
 <!-- markdown-link-check-disable-next-line -->
-If you want to obtain coins for the testnet, you can do so by using the [faucet](https://faucet.evmos.dev/).
+If you want to obtain coins for the testnet, you can do so by using the [faucet](https://www.cascadia.foundation/faucet).
 
-### Is there a minimum amount of EVMOS that must be staked to be an active (bonded) validator?
+### Is there a minimum amount of CC that must be staked to be an active (bonded) validator?
 
 There is no minimum. The top 150 validators with the highest total stake (where `total stake = self-bonded stake + delegators stake`) are the active validators.
 
@@ -124,15 +124,15 @@ There is no minimum. The top 150 validators with the highest total stake (where 
 
 Delegators are free to choose validators according to their own subjective criteria. That said, criteria anticipated to be important include:
 
-- **Amount of self-bonded EVMOS:** Number of EVMOS a validator self-bonded to its staking pool. A validator with higher amount of self-bonded EVMOS has more skin in the game, making it more liable for its actions.
+- **Amount of self-bonded CC:** Number of CC a validator self-bonded to its staking pool. A validator with higher amount of self-bonded CC has more skin in the game, making it more liable for its actions.
 
-- **Amount of delegated EVMOS:** Total number of EVMOS delegated to a validator. A high stake shows that the community trusts this validator, but it also means that this validator is a bigger target for hackers. Validators are expected to become less and less attractive as their amount of delegated EVMOS grows. Bigger validators also increase the centralization of the network.
+- **Amount of delegated CC:** Total number of CC delegated to a validator. A high stake shows that the community trusts this validator, but it also means that this validator is a bigger target for hackers. Validators are expected to become less and less attractive as their amount of delegated CC grows. Bigger validators also increase the centralization of the network.
 
 - **Commission rate:** Commission applied on revenue by validators before it is distributed to their delegators
 
 - **Track record:** Delegators will likely look at the track record of the validators they plan to delegate to. This includes seniority, past votes on proposals, historical average uptime and how often the node was compromised.
 
-Apart from these criteria, there will be a possibility for validators to signal a website address to complete their resume. Validators will need to build reputation one way or another to attract delegators. For example, it would be a good practice for validators to have their setup audited by third parties. Note though, that the Evmos team will not approve or conduct any audit itself.
+Apart from these criteria, there will be a possibility for validators to signal a website address to complete their resume. Validators will need to build reputation one way or another to attract delegators. For example, it would be a good practice for validators to have their setup audited by third parties. Note though, that the Cascadia team will not approve or conduct any audit itself.
 
 ## Responsibilites
 
@@ -146,25 +146,25 @@ Validators have three main responsibilities:
 
 - **Be able to constantly run a correct version of the software:** validators need to make sure that their servers are always online and their private keys are not compromised.
 
-- **Provide oversight and feedback on correct deployment of community pool funds:** the Evmos protocol includes the a governance system for proposals to the facilitate adoption of its currencies. Validators are expected to hold budget executors to account to provide transparency and efficient use of funds.
+- **Provide oversight and feedback on correct deployment of community pool funds:** the cascadia protocol includes the a governance system for proposals to the facilitate adoption of its currencies. Validators are expected to hold budget executors to account to provide transparency and efficient use of funds.
 
 Additionally, validators are expected to be active members of the community. They should always be up-to-date with the current state of the ecosystem so that they can easily adapt to any change.
 
 ### What does staking imply?
 
-Staking EVMOS can be thought of as a safety deposit on validation activities. When a validator or a delegator wants to retrieve part or all of their deposit, they send an unbonding transaction. Then, EVMOS undergo a *three weeks unbonding period* during which they are liable to being slashed for potential misbehaviors committed by the validator before the unbonding process started.
+Staking CC can be thought of as a safety deposit on validation activities. When a validator or a delegator wants to retrieve part or all of their deposit, they send an unbonding transaction. Then, CC undergo a *three weeks unbonding period* during which they are liable to being slashed for potential misbehaviors committed by the validator before the unbonding process started.
 
-Validators, and by association delegators, receive block provisions, block rewards, and fee rewards. If a validator misbehaves, a certain portion of its total stake is slashed (the severity of the penalty depends on the type of misbehavior). This means that every user that bonded EVMOS to this validator gets penalized in proportion to its stake. Delegators are therefore incentivized to delegate to validators that they anticipate will function safely.
+Validators, and by association delegators, receive block provisions, block rewards, and fee rewards. If a validator misbehaves, a certain portion of its total stake is slashed (the severity of the penalty depends on the type of misbehavior). This means that every user that bonded CC to this validator gets penalized in proportion to its stake. Delegators are therefore incentivized to delegate to validators that they anticipate will function safely.
 
-### Can a validator run away with its delegators' EVMOS?
+### Can a validator run away with its delegators' CC?
 
-By delegating to a validator, a user delegates staking power. The more staking power a validator has, the more weight it has in the consensus and processes. This does not mean that the validator has custody of its delegators' EVMOS. *By no means can a validator run away with its delegator's funds*.
+By delegating to a validator, a user delegates staking power. The more staking power a validator has, the more weight it has in the consensus and processes. This does not mean that the validator has custody of its delegators' CC. *By no means can a validator run away with its delegator's funds*.
 
 Even though delegated funds cannot be stolen by their validators, delegators are still liable if their validators misbehave. In such case, each delegators' stake will be partially slashed in proportion to their relative stake.
 
-### How often will a validator be chosen to propose the next block? Does it go up with the quantity of EVMOS staked?
+### How often will a validator be chosen to propose the next block? Does it go up with the quantity of CC staked?
 
-The validator that is selected to mine the next block is called the **proposer**, the "leader" in the consensus for the round. Each proposer is selected deterministically, and the frequency of being chosen is equal to the relative total stake (where total stake = self-bonded stake + delegators stake) of the validator. For example, if the total bonded stake across all validators is 100 EVMOS, and a validator's total stake is 10 EVMOS, then this validator will be chosen 10% of the time as the proposer.
+The validator that is selected to mine the next block is called the **proposer**, the "leader" in the consensus for the round. Each proposer is selected deterministically, and the frequency of being chosen is equal to the relative total stake (where total stake = self-bonded stake + delegators stake) of the validator. For example, if the total bonded stake across all validators is 100 CC, and a validator's total stake is 10 CC, then this validator will be chosen 10% of the time as the proposer.
 
 To understand more about the proposer selection process in Tendermint BFT consensus, read more [in their official docs](https://docs.tendermint.com/master/spec/consensus/proposer-selection.html).
 
@@ -174,7 +174,7 @@ To understand more about the proposer selection process in Tendermint BFT consen
 
 Each member of a validator's staking pool earns different types of revenue:
 
-- **Block rewards:** Native tokens of applications run by validators (e.g. EVMOS on Evmos) are inflated to produce block provisions. These provisions exist to incentivize EVMOS holders to bond their stake, as non-bonded EVMOS will be diluted over time.
+- **Block rewards:** Native tokens of applications run by validators (e.g. CC on Evmos) are inflated to produce block provisions. These provisions exist to incentivize CC holders to bond their stake, as non-bonded CC will be diluted over time.
 - **Transaction fees:** Evmos maintains a whitelist of token that are accepted as fee payment. The initial fee token is the `evmos`.
 
 This total revenue is divided among validators' staking pools according to each validator's weight. Then, within each validator's staking pool the revenue is divided among delegators in proportion to each delegator's stake. A commission on delegators' revenue is applied by the validator before it is distributed.
@@ -191,15 +191,15 @@ Revenue received by a validator's pool is split between the validator and its de
 
 ### How are block provisions distributed?
 
-Block provisions (rewards) are distributed proportionally to all validators relative to their total stake (voting power). This means that even though each validator gains EVMOS with each provision, all validators will still maintain equal weight.
+Block provisions (rewards) are distributed proportionally to all validators relative to their total stake (voting power). This means that even though each validator gains CC with each provision, all validators will still maintain equal weight.
 
-Let us take an example where we have 10 validators with equal staking power and a commission rate of 1%. Let us also assume that the provision for a block is 1000 EVMOS and that each validator has 20% of self-bonded EVMOS. These tokens do not go directly to the proposer. Instead, they are evenly spread among validators. So now each validator's pool has 100 EVMOS. These 100 EVMOS will be distributed according to each participant's stake:
+Let us take an example where we have 10 validators with equal staking power and a commission rate of 1%. Let us also assume that the provision for a block is 1000 CC and that each validator has 20% of self-bonded CC. These tokens do not go directly to the proposer. Instead, they are evenly spread among validators. So now each validator's pool has 100 CC. These 100 CC will be distributed according to each participant's stake:
 
-- Commission: `100*80%*1% = 0.8 EVMOS`
-- Validator gets: `100\*20% + Commission = 20.8 EVMOS`
-- All delegators get: `100\*80% - Commission = 79.2 EVMOS`
+- Commission: `100*80%*1% = 0.8 CC`
+- Validator gets: `100\*20% + Commission = 20.8 CC`
+- All delegators get: `100\*80% - Commission = 79.2 CC`
 
-Then, each delegator can claim its part of the 79.2 EVMOS in proportion to their stake in the validator's staking pool. Note that the validator's commission is not applied on block provisions. Note that block rewards (paid in EVMOS) are distributed according to the same mechanism.
+Then, each delegator can claim its part of the 79.2 CC in proportion to their stake in the validator's staking pool. Note that the validator's commission is not applied on block provisions. Note that block rewards (paid in CC) are distributed according to the same mechanism.
 
 ### How are fees distributed?
 
@@ -207,7 +207,7 @@ Fees are similarly distributed with the exception that the block proposer can ge
 
 When a validator is selected to propose the next block, it must include at least ⅔ precommits for the previous block in the form of validator signatures. However, there is an incentive to include more than ⅔ precommits in the form of a bonus. The bonus is linear: it ranges from 1% if the proposer includes ⅔rd precommits (minimum for the block to be valid) to 5% if the proposer includes 100% precommits. Of course the proposer should not wait too long or other validators may timeout and move on to the next proposer. As such, validators have to find a balance between wait-time to get the most signatures and risk of losing out on proposing the next block. This mechanism aims to incentivize non-empty block proposals, better networking between validators as well as to mitigate censorship.
 
-Let's take a concrete example to illustrate the aforementioned concept. In this example, there are 10 validators with equal stake. Each of them applies a 1% commission and has 20% of self-bonded EVMOS. Now comes a successful block that collects a total of 1005 EVMOS in fees. Let's assume that the proposer included 100% of the signatures in its block. It thus obtains the full bonus of 5%.
+Let's take a concrete example to illustrate the aforementioned concept. In this example, there are 10 validators with equal stake. Each of them applies a 1% commission and has 20% of self-bonded CC. Now comes a successful block that collects a total of 1005 CC in fees. Let's assume that the proposer included 100% of the signatures in its block. It thus obtains the full bonus of 5%.
 
 We have to solve this simple equation to find the reward $R$ for each validator:
 
@@ -215,15 +215,15 @@ $$9R ~ + ~ R ~ + ~ 5\%(R) ~ = ~ 1005 ~ \Leftrightarrow ~ R ~ = ~ 1005 ~/ ~10.05 
 
 - For the proposer validator:
 
-    - The pool obtains $R ~ + ~ 5\%(R)$: 105 EVMOS
-    - Commission: $105 ~ *~ 80\% ~* ~ 1\%$ = 0.84 EVMOS
-    - Validator's reward: $105 ~ * ~ 20\% ~ + ~ Commission$ = 21.84 EVMOS
-    - Delegators' rewards: $105 ~ * ~ 80\% ~ - ~ Commission$ = 83.16 EVMOS \(each delegator will be able to claim its portion of these rewards in proportion to their stake\)
+    - The pool obtains $R ~ + ~ 5\%(R)$: 105 CC
+    - Commission: $105 ~ *~ 80\% ~* ~ 1\%$ = 0.84 CC
+    - Validator's reward: $105 ~ * ~ 20\% ~ + ~ Commission$ = 21.84 CC
+    - Delegators' rewards: $105 ~ * ~ 80\% ~ - ~ Commission$ = 83.16 CC \(each delegator will be able to claim its portion of these rewards in proportion to their stake\)
 
-    - The pool obtains $R$: 100 EVMOS
-    - Commission: $100 ~ *~ 80\% ~* ~ 1\%$ = 0.8 EVMOS
-    - Validator's reward: $100 ~ * ~ 20\% ~ + ~ Commission$ = 20.8 EVMOS
-    - Delegators' rewards: $100 ~ * ~ 80\% ~ - ~ Commission$ = 79.2 EVMOS \(each delegator will be able to claim its portion of these rewards in proportion to their stake\)
+    - The pool obtains $R$: 100 CC
+    - Commission: $100 ~ *~ 80\% ~* ~ 1\%$ = 0.8 CC
+    - Validator's reward: $100 ~ * ~ 20\% ~ + ~ Commission$ = 20.8 CC
+    - Delegators' rewards: $100 ~ * ~ 80\% ~ - ~ Commission$ = 79.2 CC \(each delegator will be able to claim its portion of these rewards in proportion to their stake\)
 
 ### What are the slashing conditions?
 
@@ -236,13 +236,13 @@ If a validator misbehaves, its bonded stake along with its delegators' stake and
 
 Note that even if a validator does not intentionally misbehave, it can still be slashed if its node crashes, looses connectivity, gets DDoSed, or if its private key is compromised.
 
-### Do validators need to self-bond EVMOS
+### Do validators need to self-bond CC
 
 No, they do not. A validators total stake is equal to the sum of its own self-bonded stake and of its delegated stake. This means that a validator can compensate its low amount of self-bonded stake by attracting more delegators. This is why reputation is very important for validators.
 
-Even though there is no obligation for validators to self-bond EVMOS, delegators should want their validator to have self-bonded EVMOS in their staking pool. In other words, validators should have skin-in-the-game.
+Even though there is no obligation for validators to self-bond CC, delegators should want their validator to have self-bonded CC in their staking pool. In other words, validators should have skin-in-the-game.
 
-In order for delegators to have some guarantee about how much skin-in-the-game their validator has, the latter can signal a minimum amount of self-bonded EVMOS. If a validator's self-bond goes below the limit that it predefined, this validator and all of its delegators will unbond.
+In order for delegators to have some guarantee about how much skin-in-the-game their validator has, the latter can signal a minimum amount of self-bonded CC. If a validator's self-bond goes below the limit that it predefined, this validator and all of its delegators will unbond.
 
 ### How to prevent concentration of stake in the hands of a few top validators?
 

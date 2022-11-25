@@ -17,7 +17,7 @@ RPC_PORT="854"
 IP_ADDR="0.0.0.0"
 
 KEY="mykey"
-CHAINID="evmos_9000-1"
+CHAINID="cascadia_9000-1"
 MONIKER="mymoniker"
 
 ## default port prefixes for cascadiad
@@ -52,15 +52,15 @@ done
 
 set -euxo pipefail
 
-DATA_DIR=$(mktemp -d -t evmos-datadir.XXXXX)
+DATA_DIR=$(mktemp -d -t cascadia-datadir.XXXXX)
 
 if [[ ! "$DATA_DIR" ]]; then
     echo "Could not create $DATA_DIR"
     exit 1
 fi
 
-# Compile evmos
-echo "compiling evmos"
+# Compile cascadia
+echo "compiling cascadia"
 make build
 
 # PID array declaration
@@ -70,7 +70,7 @@ init_func() {
     "$PWD"/build/cascadiad keys add $KEY"$i" --keyring-backend test --home "$DATA_DIR$i" --no-backup --algo "eth_secp256k1"
     "$PWD"/build/cascadiad init $MONIKER --chain-id $CHAINID --home "$DATA_DIR$i"
     "$PWD"/build/cascadiad add-genesis-account \
-    "$("$PWD"/build/cascadiad keys show "$KEY$i" --keyring-backend test -a --home "$DATA_DIR$i")" 1000000000000000000aevmos,1000000000000000000stake \
+    "$("$PWD"/build/cascadiad keys show "$KEY$i" --keyring-backend test -a --home "$DATA_DIR$i")" 1000000000000000000uCC,1000000000000000000stake \
     --keyring-backend test --home "$DATA_DIR$i"
     "$PWD"/build/cascadiad gentx "$KEY$i" 1000000000000000000stake --chain-id $CHAINID --keyring-backend test --home "$DATA_DIR$i"
     "$PWD"/build/cascadiad collect-gentxs --home "$DATA_DIR$i"
@@ -103,17 +103,17 @@ init_func() {
 }
 
 start_func() {
-    echo "starting evmos node $i in background ..."
+    echo "starting cascadia node $i in background ..."
     "$PWD"/build/cascadiad start --pruning=nothing --rpc.unsafe \
     --p2p.laddr tcp://$IP_ADDR:$NODE_P2P_PORT"$i" --address tcp://$IP_ADDR:$NODE_PORT"$i" --rpc.laddr tcp://$IP_ADDR:$NODE_RPC_PORT"$i" \
     --json-rpc.address=$IP_ADDR:$RPC_PORT"$i" \
     --keyring-backend test --home "$DATA_DIR$i" \
     >"$DATA_DIR"/node"$i".log 2>&1 & disown
 
-    EVMOS_PID=$!
-    echo "started evmos node, pid=$EVMOS_PID"
+    CASCADIA_PID=$!
+    echo "started cascadia node, pid=$CASCADIA_PID"
     # add PID to array
-    arr+=("$EVMOS_PID")
+    arr+=("$CASCADIA_PID")
 
     if [[ $MODE == "pending" ]]; then
       echo "waiting for the first block..."
@@ -147,7 +147,7 @@ if [[ -z $TEST || $TEST == "rpc" ||  $TEST == "pending" ]]; then
 
     for i in $(seq 1 "$TEST_QTD"); do
         HOST_RPC=http://$IP_ADDR:$RPC_PORT"$i"
-        echo "going to test evmos node $HOST_RPC ..."
+        echo "going to test cascadia node $HOST_RPC ..."
         MODE=$MODE HOST=$HOST_RPC go test ./tests/... -timeout=$time_out -v -short
 
         RPC_FAIL=$?
@@ -156,12 +156,12 @@ if [[ -z $TEST || $TEST == "rpc" ||  $TEST == "pending" ]]; then
 fi
 
 stop_func() {
-    EVMOS_PID=$i
-    echo "shutting down node, pid=$EVMOS_PID ..."
+    CASCADIA_PID=$i
+    echo "shutting down node, pid=$CASCADIA_PID ..."
 
-    # Shutdown evmos node
-    kill -9 "$EVMOS_PID"
-    wait "$EVMOS_PID"
+    # Shutdown cascadia node
+    kill -9 "$CASCADIA_PID"
+    wait "$CASCADIA_PID"
 
     if [ $REMOVE_DATA_DIR == "true" ]
     then

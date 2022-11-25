@@ -6,7 +6,6 @@ import (
 	ethermint "github.com/evmos/ethermint/types"
 
 	evmos "github.com/evmos/evmos/v9/types"
-	incentivestypes "github.com/evmos/evmos/v9/x/incentives/types"
 	"github.com/evmos/evmos/v9/x/inflation/types"
 )
 
@@ -73,20 +72,30 @@ func (k Keeper) AllocateExponentialInflation(
 
 	// Allocate usage incentives to incentives module account
 	incentives = sdk.NewCoins(k.GetProportions(ctx, mintedCoin, proportions.UsageIncentives))
-	err = k.bankKeeper.SendCoinsFromModuleToModule(
-		ctx,
-		types.ModuleName,
-		incentivestypes.ModuleName,
-		incentives,
-	)
-	if err != nil {
-		return nil, nil, nil, err
+	feedist, found := k.feedistKeeper.GetFeedist(ctx, "feedist")
+
+	if found {
+		address, err := sdk.AccAddressFromHex(feedist.Contract[2:])
+		if err != nil {
+			return nil, nil, nil, err
+		}
+
+		err = k.bankKeeper.SendCoinsFromModuleToAccount(
+			ctx,
+			types.ModuleName,
+			address,
+			incentives,
+		)
+		if err != nil {
+			return nil, nil, nil, err
+		}
 	}
 
 	// Allocate community pool amount (remaining module balance) to community
 	// pool address
 	moduleAddr := k.accountKeeper.GetModuleAddress(types.ModuleName)
 	communityPool = k.bankKeeper.GetAllBalances(ctx, moduleAddr)
+
 	err = k.distrKeeper.FundCommunityPool(
 		ctx,
 		communityPool,

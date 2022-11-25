@@ -27,15 +27,15 @@ cascadiad config chain-id $CHAINID
 # if $KEY exists it should be deleted
 cascadiad keys add $KEY --keyring-backend $KEYRING --algo $KEYALGO
 
-# Set moniker and chain-id for Evmos (Moniker can be anything, chain-id must be an integer)
+# Set moniker and chain-id for Cascadia (Moniker can be anything, chain-id must be an integer)
 cascadiad init $MONIKER --chain-id $CHAINID
 
-# Change parameter token denominations to aevmos
-cat $HOME/.cascadiad/config/genesis.json | jq '.app_state["staking"]["params"]["bond_denom"]="aevmos"' > $HOME/.cascadiad/config/tmp_genesis.json && mv $HOME/.cascadiad/config/tmp_genesis.json $HOME/.cascadiad/config/genesis.json
-cat $HOME/.cascadiad/config/genesis.json | jq '.app_state["crisis"]["constant_fee"]["denom"]="aevmos"' > $HOME/.cascadiad/config/tmp_genesis.json && mv $HOME/.cascadiad/config/tmp_genesis.json $HOME/.cascadiad/config/genesis.json
-cat $HOME/.cascadiad/config/genesis.json | jq '.app_state["gov"]["deposit_params"]["min_deposit"][0]["denom"]="aevmos"' > $HOME/.cascadiad/config/tmp_genesis.json && mv $HOME/.cascadiad/config/tmp_genesis.json $HOME/.cascadiad/config/genesis.json
-cat $HOME/.cascadiad/config/genesis.json | jq '.app_state["evm"]["params"]["evm_denom"]="aevmos"' > $HOME/.cascadiad/config/tmp_genesis.json && mv $HOME/.cascadiad/config/tmp_genesis.json $HOME/.cascadiad/config/genesis.json
-cat $HOME/.cascadiad/config/genesis.json | jq '.app_state["inflation"]["params"]["mint_denom"]="aevmos"' > $HOME/.cascadiad/config/tmp_genesis.json && mv $HOME/.cascadiad/config/tmp_genesis.json $HOME/.cascadiad/config/genesis.json
+# Change parameter token denominations to uCC
+cat $HOME/.cascadiad/config/genesis.json | jq '.app_state["staking"]["params"]["bond_denom"]="uCC"' > $HOME/.cascadiad/config/tmp_genesis.json && mv $HOME/.cascadiad/config/tmp_genesis.json $HOME/.cascadiad/config/genesis.json
+cat $HOME/.cascadiad/config/genesis.json | jq '.app_state["crisis"]["constant_fee"]["denom"]="uCC"' > $HOME/.cascadiad/config/tmp_genesis.json && mv $HOME/.cascadiad/config/tmp_genesis.json $HOME/.cascadiad/config/genesis.json
+cat $HOME/.cascadiad/config/genesis.json | jq '.app_state["gov"]["deposit_params"]["min_deposit"][0]["denom"]="uCC"' > $HOME/.cascadiad/config/tmp_genesis.json && mv $HOME/.cascadiad/config/tmp_genesis.json $HOME/.cascadiad/config/genesis.json
+cat $HOME/.cascadiad/config/genesis.json | jq '.app_state["evm"]["params"]["evm_denom"]="uCC"' > $HOME/.cascadiad/config/tmp_genesis.json && mv $HOME/.cascadiad/config/tmp_genesis.json $HOME/.cascadiad/config/genesis.json
+cat $HOME/.cascadiad/config/genesis.json | jq '.app_state["inflation"]["params"]["mint_denom"]="uCC"' > $HOME/.cascadiad/config/tmp_genesis.json && mv $HOME/.cascadiad/config/tmp_genesis.json $HOME/.cascadiad/config/genesis.json
 
 # Set gas limit in genesis
 cat $HOME/.cascadiad/config/genesis.json | jq '.consensus_params["block"]["max_gas"]="10000000"' > $HOME/.cascadiad/config/tmp_genesis.json && mv $HOME/.cascadiad/config/tmp_genesis.json $HOME/.cascadiad/config/genesis.json
@@ -54,8 +54,8 @@ cat $HOME/.cascadiad/config/genesis.json | jq '.app_state["claims"]["params"]["d
 cat $HOME/.cascadiad/config/genesis.json | jq '.app_state["claims"]["params"]["duration_until_decay"]="100000s"' > $HOME/.cascadiad/config/tmp_genesis.json && mv $HOME/.cascadiad/config/tmp_genesis.json $HOME/.cascadiad/config/genesis.json
 
 # Claim module account:
-# 0xA61808Fe40fEb8B3433778BBC2ecECCAA47c8c47 || evmos15cvq3ljql6utxseh0zau9m8ve2j8erz89m5wkz
-cat $HOME/.cascadiad/config/genesis.json | jq -r --arg amount_to_claim "$amount_to_claim" '.app_state["bank"]["balances"] += [{"address":"evmos15cvq3ljql6utxseh0zau9m8ve2j8erz89m5wkz","coins":[{"denom":"aevmos", "amount":$amount_to_claim}]}]' > $HOME/.cascadiad/config/tmp_genesis.json && mv $HOME/.cascadiad/config/tmp_genesis.json $HOME/.cascadiad/config/genesis.json
+# 0xA61808Fe40fEb8B3433778BBC2ecECCAA47c8c47 || cascadia15cvq3ljql6utxseh0zau9m8ve2j8erz89m5wkz
+cat $HOME/.cascadiad/config/genesis.json | jq -r --arg amount_to_claim "$amount_to_claim" '.app_state["bank"]["balances"] += [{"address":"cascadia15cvq3ljql6utxseh0zau9m8ve2j8erz839p9mh","coins":[{"denom":"uCC", "amount":$amount_to_claim}]}]' > $HOME/.cascadiad/config/tmp_genesis.json && mv $HOME/.cascadiad/config/tmp_genesis.json $HOME/.cascadiad/config/genesis.json
 
 # disable produce empty block
 if [[ "$OSTYPE" == "darwin"* ]]; then
@@ -89,7 +89,7 @@ if [[ $1 == "pending" ]]; then
 fi
 
 # Allocate genesis accounts (cosmos formatted addresses)
-cascadiad add-genesis-account $KEY 100000000000000000000000000aevmos --keyring-backend $KEYRING
+cascadiad add-genesis-account $KEY 100000000000000000000000000uCC --keyring-backend $KEYRING
 
 # Update total supply with claim values
 validators_supply=$(cat $HOME/.cascadiad/config/genesis.json | jq -r '.app_state["bank"]["supply"][0]["amount"]')
@@ -99,7 +99,7 @@ total_supply=100000000000000000000010000
 cat $HOME/.cascadiad/config/genesis.json | jq -r --arg total_supply "$total_supply" '.app_state["bank"]["supply"][0]["amount"]=$total_supply' > $HOME/.cascadiad/config/tmp_genesis.json && mv $HOME/.cascadiad/config/tmp_genesis.json $HOME/.cascadiad/config/genesis.json
 
 # Sign genesis transaction
-cascadiad gentx $KEY 1000000000000000000000aevmos --keyring-backend $KEYRING --chain-id $CHAINID
+cascadiad gentx $KEY 1000000000000000000000uCC --keyring-backend $KEYRING --chain-id $CHAINID
 ## In case you want to create multiple validators at genesis
 ## 1. Back to `cascadiad keys add` step, init more keys
 ## 2. Back to `cascadiad add-genesis-account` step, add balance for those
@@ -118,4 +118,4 @@ if [[ $1 == "pending" ]]; then
 fi
 
 # Start the node (remove the --pruning=nothing flag if historical queries are not needed)
-cascadiad start --pruning=nothing $TRACE --log_level $LOGLEVEL --minimum-gas-prices=0.0001aevmos --json-rpc.api eth,txpool,personal,net,debug,web3
+cascadiad start --pruning=nothing $TRACE --log_level $LOGLEVEL --minimum-gas-prices=0.0001uCC --json-rpc.api eth,txpool,personal,net,debug,web3
